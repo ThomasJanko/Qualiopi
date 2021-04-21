@@ -11,6 +11,7 @@ class Client extends Model
 {
     use HasFactory;
 
+
     protected $fillable = ['social_reason', 'email', 'address', 'city', 'country', 'postal' ];
 
 

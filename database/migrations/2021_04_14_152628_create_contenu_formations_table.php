@@ -17,7 +17,7 @@ class CreateContenuFormationsTable extends Migration
             $table->id();
             $table->string('contenu');
             $table->string('description');
-            $table->number('time_contenu');
+            $table->string('time_contenu');
             $table->timestamps();
         });
     }

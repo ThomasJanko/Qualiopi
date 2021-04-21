@@ -19,7 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('email');
             $table->string('address');
             $table->string('city');
-            $table->number('postal');
+            $table->string('postal');
             $table->string('country');
 
 

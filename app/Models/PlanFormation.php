@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use League\CommonMark\Block\Element\Document;
 
-class PlanFormation extends Model
+class planformation extends Model
 {
     use HasFactory;
 

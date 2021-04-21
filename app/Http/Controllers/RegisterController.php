@@ -11,13 +11,16 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
+
+
+
     public function register(Request $request){
 
         $request->validate([
             'name' => ['required'],
             'surname' => ['required'],
             'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:6', 'confirmed'],
+            'password' => ['required', 'min:8', 'confirmed'],
             'password_confirmation' => ['required']
         ]);
 

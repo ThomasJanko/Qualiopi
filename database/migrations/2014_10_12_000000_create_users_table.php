@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 class CreateUsersTable extends Migration
 {
     /**
@@ -21,9 +22,11 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('role_id');
+            // $table->unsignedBigInteger('client_id');
+            // $table->unsignedBigInteger('role_id');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +37,14 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        // Schema::dropIfExists('users'); //format de base
+
+        Schema::dropIfExists('users', function (Blueprint $table) {
+
+            $table->dropColumn('deleted_at'); //permet d'annuler la migraton // effectuer un roll back
+
+        });
+
+
     }
 }
