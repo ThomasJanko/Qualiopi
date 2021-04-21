@@ -13,7 +13,7 @@ class CreateContenuQuestionnaireTable extends Migration
      */
     public function up()
     {
-        Schema::create('contenu_questionnaire', function (Blueprint $table) {
+        Schema::create('contenuQuestionnaires', function (Blueprint $table) {
             $table->id();
             $table->unsignedbigInteger('questionnaire_id');
             $table->unsignedbigInteger('contenu_formation_id');

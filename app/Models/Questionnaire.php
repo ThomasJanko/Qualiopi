@@ -14,7 +14,7 @@ class Questionnaire extends Model
 
     public function contenuFormation()
     {
-        return $this->belongsTo(ContenuFormation::class);
+        return $this->hasOne(ContenuFormation::class);
     }
 
 }

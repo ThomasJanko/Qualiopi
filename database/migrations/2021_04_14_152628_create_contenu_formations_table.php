@@ -13,7 +13,7 @@ class CreateContenuFormationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contenu_formations', function (Blueprint $table) {
+        Schema::create('contenuFormations', function (Blueprint $table) {
             $table->id();
             $table->string('contenu');
             $table->string('description');

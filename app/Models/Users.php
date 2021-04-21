@@ -19,20 +19,20 @@ class Users extends Model
 
     public function role()
     {
-         return $this->hasOne(Role::class);
+         return $this->belongsTo(Role::class);
     }
 
 
 
     public function client() //clients ou client ?
     {
-            return $this->hasOne(Client::class);
+            return $this->belongsTo(Client::class);
     }
 
 
     public function formations()
     {
-        return $this->belongsToMany(Formation::class);
+        return $this->hasMany(Formation::class);
     }
 
 

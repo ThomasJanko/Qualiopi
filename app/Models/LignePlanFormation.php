@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LignePlanFormation extends Model
+//Pivot entre Plan de formation et contenu de formation
 {
-    protected $fillable = ['plan_formation','contenu_formation'];
+    protected $fillable = ['planFormation','contenuFormation', 'planFormation_id', 'contenuFormation_id'];
 
 
     public function planFormations()

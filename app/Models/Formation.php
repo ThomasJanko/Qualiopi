@@ -11,12 +11,13 @@ class Formation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name_formation','date_formation','location_formation','state_formation','user_id', 'client_id', 'planFormation_id', 'information_id'];
+    protected $fillable = ['nameFormation','dateFormation','locationFormation','stateFormation','user_id', 'client_id', 'planFormation_id', 'information_id'];
 
 
 
     public function users()
     {
+        //TODO:Vérifier le bon fonctionnement
         return $this->belongsToMany(Users::class);
     }
 
@@ -31,7 +32,6 @@ class Formation extends Model
     {
         return $this->belongsTo(planFormation::class);
     }
-
 
     public function Information()
     {

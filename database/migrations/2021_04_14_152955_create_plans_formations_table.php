@@ -13,7 +13,7 @@ class CreatePlanFormationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('plan_formations', function (Blueprint $table) {
+        Schema::create('planFormations', function (Blueprint $table) {
             $table->id();
             $table->string('name_formation');
             $table->number('time_formation');

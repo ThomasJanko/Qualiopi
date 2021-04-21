@@ -8,10 +8,12 @@ use App\Models\User;
 use League\CommonMark\Block\Element\Document;
 
 class PlanFormation extends Model
+//Le contenu du plan de formation sélétionné pour la formation.
+//Il est rattaché à Ligne de Formation pour avoir son sensemble.
 {
     use HasFactory;
 
-    protected $fillable = ['name','time_formation'];
+    protected $fillable = ['name','timeFormation'];
 
     public function formation()
     {

@@ -13,7 +13,7 @@ class CreateLignePlanFormationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ligne_plan_formations', function (Blueprint $table) {
+        Schema::create('planFormation_lignePlanFormation_contenuFormations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('plan_formation_id');
             $table->unsignedBigInteger('contenu_formation_id');
