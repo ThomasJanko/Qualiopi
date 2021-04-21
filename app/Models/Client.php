@@ -15,14 +15,14 @@ class Client extends Model
     protected $fillable = ['social_reason', 'email', 'address', 'city', 'country', 'postal' ];
 
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsToMany(Users::class);
     }
 
-    public function formation()
+    public function formations()
     {
-        return $this->belongsTo(Formation::class);
+        return $this->belongsToMany(Formation::class);
     }
 
 
