@@ -16,7 +16,7 @@ class CreatePlanFormationsTable extends Migration
         Schema::create('planFormations', function (Blueprint $table) {
             $table->id();
             $table->string('name_formation');
-            $table->number('time_formation');
+            $table->string('time_formation');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePlanFormationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plan_formations');
+        Schema::dropIfExists('planformations');
     }
 }

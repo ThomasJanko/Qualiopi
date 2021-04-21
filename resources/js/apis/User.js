@@ -1,18 +1,48 @@
 import Api from './Api';
 import Csrf from './Csrf';
 
-export default {
+export default{
+
+    //creation d'un user
     async register(form){
         await Csrf.getCookie();
-        return Api.post('/register', form)
+        return Api.post('/register',form)
     },
+
+     //connection d'un user
     async login(form){
         await Csrf.getCookie();
-        return Api.post('/login', form)
+        return Api.post('/login',form)
     },
+
+     //deconnection d'un user
     async logout(){
         await Csrf.getCookie();
         return Api.post('/logout')
+    },
+
+       //information des users
+       async index(){
+        await Csrf.getCookie();
+        return Api.get('/test')
+    },
+
+     //modification d'un user
+     async edit(id){
+        await Csrf.getCookie();
+        return Api.get('/edit/user/'+id)
+    },
+
+    //enregistrer modification d'un user
+    async update(form){
+        await Csrf.getCookie();
+        return Api.post('/update/user',form)
+    },
+
+    //suppression d'un user
+    async deactivate(id){
+        await Csrf.getCookie();
+        return Api.delete('/deactivate/user/'+id)
     },
 
      auth(){

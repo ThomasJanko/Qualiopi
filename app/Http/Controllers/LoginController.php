@@ -27,16 +27,20 @@ class LoginController extends Controller
        ]);
     }
 
+
     public function logout()
     {
         Auth::logout();
     }
+
 
     public function getUser()
     {
 
         return response()->json(Auth::user(), 200);
     }
+
+
 
 
 }

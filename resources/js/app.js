@@ -1,32 +1,30 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
 require('./bootstrap');
 
-window.Vue = require('vue').default;
+import Vue from 'vue';
+import Vuex from 'vuex';
+import router from './router';
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+window.Vue = require('vue');
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.use(Vuex);
 
-const app = new Vue({
+
+
+
+//Importation  des composants
+Vue.component('Homecomponent', require('./components/HomeComponent.vue').default); //premier composant chargé dans blade il doit etre en minuscule dans welcome.blade.php // peut etre en majuscule dans app.blade.php
+Vue.component('ExampleComponent', require('./components/ExampleComponent.vue').default);
+Vue.component('TestComponent', require('./components/TestComponent.vue').default);
+
+
+
+ const app = new Vue({
     el: '#app',
-});
+    router,
+
+    // store,
+
+    })
