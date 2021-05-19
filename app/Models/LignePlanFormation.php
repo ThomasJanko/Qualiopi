@@ -5,20 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LignePlanFormation extends Model
+class Ligneplanformation extends Model
 //Pivot entre Plan de formation et contenu de formation
 {
-    protected $fillable = ['planFormation','contenuFormation', 'planFormation_id', 'contenuFormation_id'];
+    // protected $table = 'ligneformations';
+
+    protected $fillable = ['planformation_id', 'contenuformation_id'];
 
 
-    public function planFormations()
+    public function planformations()
     {
-        return $this->belongsToMany(PlanFormation::class);
+        return $this->belongsToMany(Planformation::class);
     }
 
-    public function contenuFormation()
+    // public function contenuformations()
+    // {
+    //     return $this->belongsToMany(Contenuformation::class);
+    // }
+
+    public function listformations()
     {
-        return $this->belongsToMany(ContenuFormation::class);
+        return $this->hasMany(ListFormation::class);
     }
 
 

@@ -26,6 +26,17 @@ export default{
         await Csrf.getCookie();
         return Api.get('/test')
     },
+       //Récupération des utilisateurs d'un client
+       async listUserOfClient(id){
+        await Csrf.getCookie();
+        return Api.get('client/'+id+'/users/')
+    },
+
+    async listFormateur(){
+        await Csrf.getCookie();
+        return Api.get('/formation/formateur')
+    },
+
 
      //modification d'un user
      async edit(id){
@@ -44,9 +55,21 @@ export default{
         await Csrf.getCookie();
         return Api.delete('/deactivate/user/'+id)
     },
+    //changer mdp
+    async resetPassword(form){
+        await Csrf.getCookie();
+         return Api.post("/resetPassword",form);
+    },
 
-     auth(){
+
+    auth(){
 
         return Api.get('/user')
-    }
+    },
+
+         //List user par type role
+         async listUserByRole(id){
+            await Csrf.getCookie();
+            return Api.get('/user/role/'+id)
+        },
 }

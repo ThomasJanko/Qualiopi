@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFormationUsersTable extends Migration
+class CreateLigneplanformationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateFormationUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('formation_users', function (Blueprint $table) {
+        Schema::create('ligneplanformations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('formation_id');
-            $table->unsignedbigInteger('user_id');
+            $table->unsignedBigInteger('listformations_id');
 
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateFormationUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('formation_user');
+        Schema::dropIfExists('ligneplanformations');
     }
 }

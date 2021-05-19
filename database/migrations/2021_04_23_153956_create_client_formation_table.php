@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContenuQuestionnairesTable extends Migration
+class CreateClientFormationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateContenuQuestionnairesTable extends Migration
      */
     public function up()
     {
-        Schema::create('contenuQuestionnaires', function (Blueprint $table) {
+        Schema::create('client_formation', function (Blueprint $table) {
             $table->id();
-            $table->unsignedbigInteger('questionnaire_id');
-            $table->unsignedbigInteger('contenu_formation_id');
+            $table->unsignedbigInteger('client_id');
+            $table->unsignedBigInteger('formation_id');
+
         });
     }
 
@@ -27,6 +28,6 @@ class CreateContenuQuestionnairesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contenu_questionnaire');
+        Schema::dropIfExists('client_formation');
     }
 }

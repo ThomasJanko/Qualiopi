@@ -12,9 +12,15 @@ class Questionnaire extends Model
 
     protected $fillable = ['name'];
 
-    public function contenuFormation()
+    public function contenuformations()
     {
-        return $this->hasOne(ContenuFormation::class);
+        return $this->belongsToMany(Contenuformation::class);
+    }
+
+
+    public function contenuquestionnaires()
+    {
+        return $this->belongsToMany(Contenuquestionnaire::class);
     }
 
 }

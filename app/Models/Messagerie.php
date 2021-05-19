@@ -8,6 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Messagerie extends Model
 {
     use HasFactory;
-
     // A DEFINIR !
 }

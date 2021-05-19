@@ -21,9 +21,10 @@ class CreateClientsTable extends Migration
             $table->string('city');
             $table->string('postal');
             $table->string('country');
-
-
             $table->timestamps();
+
+            $table->softDeletes();
+
         });
     }
 
@@ -34,6 +35,12 @@ class CreateClientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        // Schema::dropIfExists('client'); //format de base
+
+        Schema::dropIfExists('client', function (Blueprint $table) {
+
+            $table->dropColumn('deleted_at'); //permet d'annuler la migraton // effectuer un roll back
+
+        });
     }
 }

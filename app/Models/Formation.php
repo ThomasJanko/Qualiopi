@@ -2,23 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use League\CommonMark\Block\Element\Document;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Formation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nameFormation','dateFormation','locationFormation','stateFormation','user_id', 'client_id', 'planFormation_id', 'information_id'];
+    protected $table = 'formations';
+
+    protected $fillable = ['name_formation','location_formation','state_formation','user_id','client_id','planformation_id','information_id'];
 
 
 
     public function users()
     {
-        //TODO:Vérifier le bon fonctionnement
-        return $this->belongsToMany(Users::class);
+
+        return $this->belongsToMany(User::class,'formation_user','formation_id','user_id');
     }
 
 
@@ -28,15 +30,24 @@ class Formation extends Model
     }
 
 
-    public function planFormation()
+    public function planformation()
     {
-        return $this->belongsTo(planFormation::class);
+        return $this->belongsTo(Planformation::class);
     }
 
-    public function Information()
+    public function informations()
     {
-        return $this->belongsTo(Information::class);
+        return $this->belongsTo(Information::class,'information_id');
     }
+
+
+    public function dates()
+    {
+
+        return $this->belongsToMany(Date::class);
+    }
+
+
 
 
 

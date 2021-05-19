@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlanFormationsTable extends Migration
+class CreateContenuquestionnairesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreatePlanFormationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('planFormations', function (Blueprint $table) {
+        Schema::create('contenuquestionnaires', function (Blueprint $table) {
             $table->id();
-            $table->string('name_formation');
-            $table->string('time_formation');
-            $table->timestamps();
+            $table->unsignedBigInteger('contenuquestionnaire_id');
+
         });
     }
 
@@ -28,6 +27,6 @@ class CreatePlanFormationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('planformations');
+        Schema::dropIfExists('contenuquestionnaires');
     }
 }

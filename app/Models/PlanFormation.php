@@ -7,21 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use League\CommonMark\Block\Element\Document;
 
-<<<<<<< HEAD
-class PlanFormation extends Model
-//Le contenu du plan de formation sélétionné pour la formation.
-//Il est rattaché à Ligne de Formation pour avoir son sensemble.
-=======
-class planformation extends Model
->>>>>>> 0b12e317e392cc03691fcdf9b5688862fdc2898f
+
+
+class Planformation extends Model
+
 {
     use HasFactory;
+
+    // protected $table = 'planformations';
 
     protected $fillable = ['name','timeFormation'];
 
     public function formation()
     {
         return $this->belongsTo(Formation::class);
+    }
+
+    public function ligneplanformations()
+    {
+        return $this->hasMany(Ligneplanformation::class);
     }
 
 }

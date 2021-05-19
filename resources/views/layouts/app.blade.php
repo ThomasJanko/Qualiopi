@@ -22,8 +22,8 @@
 <body>
     <div id="app">
 
-        <Homecomponent></Homecomponent>
+            <Homecomponent></Homecomponent>
 
-      </div>
+    </div>
 </body>
 </html>

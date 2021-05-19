@@ -20,13 +20,16 @@
             }
         </style>
            <script src="{{ asset('js/app.js') }}" defer></script>
+           <link rel="stylesheet" href="{{asset('css/app.css')}}">
     </head>
     <body class="antialiased">
-      {{-- <div id="app">
+     <div id="app">
 
-        <homecomponent></homecomponent>
+          <maincomponent></maincomponent>
 
-      </div> --}}
+
+      </div>
+
     </body>
 
 </html>

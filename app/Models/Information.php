@@ -9,13 +9,15 @@ class Information extends Model
 {
     use HasFactory;
 
+    protected $table = 'informations';
+    public $timestamps = false;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['contenu'];
 
 
-    public function formation()
+    public function formations()
     {
-        return $this->belongsTo(Formation::class);
+        return $this->hasOne(Formation::class); //->pivot with formation
     }
 
 }
