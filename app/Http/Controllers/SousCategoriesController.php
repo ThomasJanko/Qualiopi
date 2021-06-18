@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Souscategorie;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
+use App\Models\Souscategorie;
 
 class SousCategoriesController extends Controller
 {
@@ -11,17 +12,43 @@ class SousCategoriesController extends Controller
     {
 
 
-        $listcontenus= Souscategorie::with('contenus')->get();
+
+        $listsouscategorie=Souscategorie::with('categorie')->get();
 
 
-        return  $listcontenus ;
+        return $listsouscategorie;
+        // $listcontenus= Souscategorie::with('contenus')->get();
+        // return  $listcontenus ;
 
     }
 
-    public function listcontenus(Souscategorie $id)
+    public function listsouscategories(Categorie $id)
     {
-    $id->contenus;
+
+    $id->souscategories;
+
      return response()->json($id);
     }
+
+    public function add(Request $request){
+
+        $request->validate([
+
+            'title' => ['required'],
+
+        ]);
+
+        $souscat = new Souscategorie([
+
+            'title' =>$request->title,
+
+        ]);
+
+        $souscat->save();
+
+        return response()->json($souscat);
+
+    }
+
 
 }

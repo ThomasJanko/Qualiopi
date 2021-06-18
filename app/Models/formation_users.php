@@ -12,6 +12,6 @@ class formation_user extends Pivot
 
     public function formations()
     {
-        return $this->hasMany(Formation::class,'id','formation_id');
+        return $this->hasMany(Formation::class,'id','formation_id', 'user_id');
     }
 }

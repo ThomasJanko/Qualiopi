@@ -6,18 +6,18 @@ export default{
 
     async add(form){
         await Csrf.getCookie();
-        return Api.post('create/datesformation',form);
+        return Api.post('create/datesformation/',form);
 
     },
     async update(id){
         await Csrf.getCookie();
-        return Api.post('update/datesformation',+id);
+        return Api.post('update/datesformation'+id);
 
     },
 
     async delete(id){
         await Csrf.getCookie();
-        return Api.delete('/delete/datesformation',+id);
+        return Api.get('/delete/datesformation/'+id);
 
     },
 

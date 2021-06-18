@@ -12,29 +12,38 @@ class DateController extends Controller
 
         $request->validate([
 
-            'dateformation' => ['required'],
-            'heuredebut' => ['required'],
-            'heurefin' => ['required']
+            'name' => ['required'],
+            'dateid' => ['required'],
+            'start' => ['required'],
+            'end' => ['required'],
+            'formation_id' => ['required'],
 
         ]);
 
+        //CREATION D UNE DATE
+
         $date = new Date([
 
-            'dateformation' =>$request->dateformation,
-            'heuredebut' =>$request->heuredebut,
-            'heurefin' =>$request->heurefin
+            'name'=>$request->name,
+            'dateid'=>$request->name->start->end->formation_id, //DATE ID CORRESPOND AU GROUPEMENT DES AUTRES COLONNES
+            'start'=>$request->start,
+            'end'=>$request->end,
+            'formation_id'=>$request->formation
+
         ]);
 
         $date->save();
 
-        return response()->json('date added');
 
-    }
+
+     }
 
     //Récuperer une date
     public function index(Request $Request)
     {
         $dates = Date::all();//->toArray();
+
+
         return response()->json($dates);  //all clients
     }
 
@@ -44,9 +53,12 @@ class DateController extends Controller
     {
         $this->validate($request, [
 
-            'dateformation' => 'required',
-            'heuredebut' => 'required',
-            'heurefin' => 'required'
+
+            'name'=>'required',
+            'dateid'=>'required',
+            'start'=>'required',
+            'end'=>'required',
+            'formation_id'=>['required']
 
         ]);
 
@@ -59,11 +71,32 @@ class DateController extends Controller
     }
 
     //Supprimer une date pour la formation
-    public function delete($id)
+    // public function delete($id)
+    // {
+    //     $date = Date::find($id);
+    //     $date->delete();
+    //     return response()->json('date deleted');
+    // }
+
+
+
+
+    public function delete(int $id)
     {
-        $date = Date::find($id);
-        $date->delete();
-        return response()->json('date deleted');
+
+      $res = Date::findOrFail($id);
+      $res->delete();
+
+      return response()->json($res,200);
+
+    }
+
+
+
+
+    public function infoDates(Date $id)
+    {
+        $formations = Date::with('dates')->get();
     }
 
 }

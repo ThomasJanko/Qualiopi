@@ -13,13 +13,12 @@ class Formation extends Model
 
     protected $table = 'formations';
 
-    protected $fillable = ['name_formation','location_formation','state_formation','user_id','client_id','planformation_id','information_id'];
+    protected $fillable = ['name_formation','location_formation','state_formation','user_id','client_id','information_id'];
 
 
 
     public function users()
     {
-
         return $this->belongsToMany(User::class,'formation_user','formation_id','user_id');
     }
 
@@ -32,8 +31,9 @@ class Formation extends Model
 
     public function planformation()
     {
-        return $this->belongsTo(Planformation::class);
+        return $this->hasMany(Planformation::class, 'formation_id');
     }
+
 
     public function informations()
     {
@@ -43,8 +43,7 @@ class Formation extends Model
 
     public function dates()
     {
-
-        return $this->belongsToMany(Date::class);
+        return $this->hasMany(Date::class, 'formation_id');
     }
 
 

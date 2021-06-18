@@ -1,89 +1,73 @@
 <template>
-<v-card max-width="1000"  >
+
 
     <v-container fluid>
+         <v-card max-width="1000" class="elevation-12  col-12" >
       <v-row
-        align="center"
-      >
-        <v-col
-          cols="12"
-          sm="6"
-        >
-
-
-
-        <v-list width="1000">
-      <v-list-item class="secondary" dark >
-        <v-list-item-icon >
-          <v-icon>mdi-format-list-bulleted-square</v-icon>
-        </v-list-item-icon>
-
-
-        <v-list-item-title class=" font-weight-bold">Liste Formations</v-list-item-title>
-        <v-btn shaped class="primary " @click="sortName(items)"> <v-icon>mdi-sort-alphabetical-ascending</v-icon>
-         Name
-         </v-btn>
-      </v-list-item>
-
-      <v-list-group v-for="item in items"
-          :key="item.id"
-          @click="showSousCategorie(item.id)"
-        :value="false"
-        prepend-icon='mdi-send-circle-outline'
-
 
       >
-        <template v-slot:activator>
-          <v-list-item-title v-model="selectedCategorie" >
-            {{item.categorie}}
-              </v-list-item-title>
-        </template>
-
-<!--  -->
 
 
-
-<!--  -->
-          <v-list-group v-for="(info, index) in infos.souscategories" :key="index"
-           @click="showContenus(index.id)"
-          :value="false"
-          no-action
-          sub-group
-        >
-          <template v-slot:activator >
-            <v-list-item-content v-model="ItemsSousCategories" >
-              <v-list-item-title v-model="selectedSousCategorie"> {{info.title}} </v-list-item-title>
-            </v-list-item-content>
-          </template>
+            <v-text-field class="col-8"
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Rechercher"
+                single-line
+                hide-details
+            ></v-text-field>
+            <v-spacer></v-spacer>
+            <v-flex  class=" pt-2">
+                <v-btn class="orange lighten-1" @click="sortName(cats)"> <v-icon>mdi-sort-alphabetical-ascending</v-icon></v-btn>
+            </v-flex>
+            <v-flex justify-end class="pr-8 pt-2">
+             <v-btn class="success" @click="Send(); close()"> Valider</v-btn>
+            </v-flex>
 
 
 
-<!--  -->
-            <v-list-group v-for="(contenu, index) in contenus" :key="index"
-          :value="false"
-          no-action
-          sub-group
-        >
-          <template v-slot:activator >
-            <v-list-item-content v-model="ItemsSousCategories" >
-              <v-list-item-title v-model="selectedSousCategorie"> {{contenu.details}} </v-list-item-title>
-            </v-list-item-content>
-          </template>
+                <!-- <thead>
+                    <tr>
+                    <th class="text-left primary--text font-weight-black" >
+                        Catégories
+                    </th>
+                     <th class="text-left primary--text font-weight-black">
+                        Thèmes
+                    </th>
+
+                    <th class="text-left primary--text font-weight-black">
+                        Détails
+                    </th> -->
+                    <!-- </tr> -->
+                <!-- </thead> -->
+
+</v-row>
+<v-list class="pt-2">
+        <v-list v-for="cat in cats" :key="cat.id">
+
+            <Categories :categorieid="cat.id" :categorietitle="cat.title" :catsouscats="cat.souscategories"> </Categories>
+
+
+        </v-list>
 
 
 
-        </v-list-group>
-      </v-list-group>
-      </v-list-group>
-    </v-list>
+<p>{{selectedContenus}} </p>
+</v-list>
 
-        </v-col>
 
-      </v-row>
-</v-container>
+
+
+
+
+
+
 
 
 </v-card>
+</v-container>
+
+
+
 
 
 
@@ -93,87 +77,126 @@
 <script>
 
 import ListFormations from '../apis/ListFormations';
+import Categorie from '../apis/Categorie';
 import SousCategorie from '../apis/SousCategorie';
-
 import { mapState } from 'vuex';
 
 
 export default {
 
 
-     data: () => ({
+  data: () => ({
 
-        value: [],
-        items: [],
+
+      form:{
+          planformation_id: '',
+          Categorie: '',
+          SousCategorie: '',
+          Contenu: '',
+      },
+        search: "",
         details: [],
-        contenus: {},
-        infos: {},
-        ItemsSousCategories: false,
+        lists: [],
+        infos: [],
 
+
+      categoriee: true,
+      souscategorie : true,
+      contenu: true,
+
+
+
+    cats: [],
+    souscats: [],
+    contenus: [],
 
     }),
 
 mounted(){
 
-//Infos de listFormation
-        ListFormations.index()
+
+
+
+
+
+       //List Categories
+     Categorie.index()
                 .then(response =>{
-                    console.log(response.data)
-                    this.items = response.data;
+                    this.cats = response.data;
+                    // this.$store.state.formation.Categories = this.cats
+                    this.$store.commit('UPDATE_CATEGORIES', this.cats)
+                    console.log('categories')
+                    console.log(this.$store.state.formation.Categories)
+
 
                 })
                 .catch(error => console.log(error))
 
-//Infos de SousCategorie
-             SousCategorie.index()
-            .then(response =>{
-                console.log(response.data)
-                this.details = response.data;
-            })
-            .catch(error => console.log(error))
+
+        //List Souscategories
+        SousCategorie.index()
+                .then(response =>{
+                    this.souscats = response.data;
+                    // this.$store.state.formation.SousCategories = this.souscats
+                    this.$store.commit('UPDATE_SOUSCATEGORIES', this.souscats)
+                     console.log('sousCategories')
+                    console.log(this.$store.state.formation.SousCategories)
+
+
+                })
+                .catch(error => console.log(error))
+
+
+        //List contenus
+        ListFormations.contenus()
+                .then(response =>{
+                    this.contenus = response.data;
+                    // this.$store.state.formation.Contenus = this.contenus
+                    this.$store.commit('UPDATE_CONTENUS', this.contenus)
+                })
+                .catch(error => console.log(error))
+
+
 
 
 },
 
     methods: {
 
-        showSousCategorie(id){
+        close(){
 
-            this.$store.state.formation.selectedCategorie = id;
-            console.log(this.$store.state.formation.selectedCategorie)
-
-               ListFormations.listsouscategories(this.$store.state.formation.selectedCategorie)
-            .then(response =>{
-                console.log(response.data)
-                this.infos = response.data;
-
-            })
-            .catch(error => console.log(error))
+        this.$emit('closeplan')
 
         },
+        Send(){
 
-         showContenus(id){
+            //tesplan
+             console.log(this.$store.state.formation.selectedContenus)
 
-            this.$store.state.formation.selectedSousCategorie = id;
-            console.log(this.$store.state.formation.selectedSousCategorie)
 
-               SousCategorie.listcontenus(this.$store.state.formation.selectedSousCategorie)
-            .then(response =>{
-                console.log(response.data)
-                this.contenus = response.data;
 
-            })
-            .catch(error => console.log(error))
 
         },
 
 
+        addDetails(id){
 
+
+            this.details.push(id);
+        },
+
+
+      filterOnlyCapsText (value, search, cat) {
+        return value != null &&
+          search != null &&
+          typeof value === 'string' &&
+          value.toString().toLocaleUpperCase().indexOf(search) !== -1
+      },
 
 
 
     sortName(arr){
-        this.items = this.SortName(arr)
+        this.cats = this.SortName(arr)
     },
 
 
@@ -192,6 +215,43 @@ SortName: function(arr) {//filtre desc
                 return arr
             }
         },
+
+
+
+//Ajouter une catégorie
+      addCategorie () {
+
+           ListFormations.addCategorie(this.form)
+                        .then(response => {
+                       this.cats = response.data;
+                       this.form.categorie=''
+                        })
+
+
+        console.log('Catégorie Ajoutée')
+
+      },
+
+      //Ajouter une nouvelle sousCatégorie
+      addSouscategorie () {
+
+        console.log('SousCategorie Ajoutée')
+
+          ListFormations.addSousCategorie(this.form)
+                        .then(response => {
+                       this.infos = response.data;
+                       this.form.title=''
+                        })
+
+
+        console.log('SousCatégorie Ajoutée')
+      },
+      //Ajouter un contenu
+      addContenu () {
+
+        console.log('Contenu Ajouté')
+        this.contenu = '';
+      },
 
 
     },
@@ -217,6 +277,16 @@ SortName: function(arr) {//filtre desc
                  this.$store.dispatch('UPDATE_ITEMS_CONTENUS',data)
              }
         },
+
+        selectedContenus:{
+             get(){
+                 return this.$store.state.formation.selectedContenus
+             },
+             set(data){
+                 this.$store.dispatch('UPDATE_SELECTED_CONTENUS',data)
+             }
+        },
+
     }
 
 

@@ -20,7 +20,7 @@
         "material-design-icons-iconfont": "^6.1.0",
         "popper.js": "^1.12",
         "postcss": "^8.1.14",
-        "resolve-url-loader": "^2.3.1",
+        "resolve-url-loader": "^4.0.0",
         "sass": "^1.32.11",
         "sass-loader": "^8.0.2",
         "vue": "^2.5.17",
@@ -29,6 +29,8 @@
     },
     "dependencies": {
         "js-cookie": "^2.2.1",
+        "v-digital-time-picker": "^0.1.8",
+        "vue-kinesis": "^1.2.3",
         "vue-router": "^3.5.1",
         "vuetify": "^2.4.11",
         "vuex": "^3.6.2"

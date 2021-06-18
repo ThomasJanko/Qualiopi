@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 // use Dotenv\Exception\ValidationException;
+use App\Models\Users;
+use App\Models\Client;
 use Illuminate\Http\Request;
+
+
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Validation\ValidationException;
-
-
-use App\Models\Users;
 
 
 

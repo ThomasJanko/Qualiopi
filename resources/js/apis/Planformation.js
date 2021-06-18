@@ -4,15 +4,20 @@ import Csrf from './Csrf';
 export default{
 
 
+    async add(form){
+        await Csrf.getCookie();
+        return Api.post('create/planformation',form);
 
-    async index()
-    {
-        return Api.get('/planformation/')
     },
-
 
     async PlanFormation(id){
         await Csrf.getCookie();
         return Api.get('/formation/'+id+'/plan/')
-    }
+    },
+
+    async infosPlanformation()
+    {
+        return Api.get('/planformation/')
+    },
+
 }

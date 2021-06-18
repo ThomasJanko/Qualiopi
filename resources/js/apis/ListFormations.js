@@ -6,7 +6,7 @@ export default{
 
     async add(form){
         await Csrf.getCookie();
-        return Api.post('create/listformations',form);
+        return Api.post('add/listformation',form);
 
     },
     async edit(id){
@@ -17,7 +17,7 @@ export default{
 
     async delete(id){
         await Csrf.getCookie();
-        return Api.delete('/deactivate/listformations',+id);
+        return Api.get('/delete/listformation/'+id);
 
     },
 
@@ -32,16 +32,42 @@ export default{
         return Api.get('/formation/listformations/')
     },
 
+
+    async listcategories(id){
+        await Csrf.getCookie();
+        return Api.get('/formation/'+id+'/listcategories')
+    },
+
     async listsouscategories(id){
         await Csrf.getCookie();
         return Api.get('/formation/'+id+'/listsouscategories')
     },
-
-
-
-    async test(){
+    async listcontenus(id){
         await Csrf.getCookie();
-        return Api.get('/formation/test/')
+        return Api.get('/formation/'+id+'/listsouscategorie/listcontenus')
     },
+
+
+
+    async categories()
+    {
+        await Csrf.getCookie();
+        return Api.get('/listformation/categories/');
+    },
+    async souscategories()
+    {
+        await Csrf.getCookie();
+        return Api.get('/listformation/souscategories/');
+    },
+
+    async contenus()
+    {
+        await Csrf.getCookie();
+        return Api.get('/listformation/contenus/');
+    },
+
+
+
+
 
 }

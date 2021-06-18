@@ -7,6 +7,9 @@ import router from './router';
 import vuetify from './plugins/vuetify.js'
 import store from './store';
 import Vuetify from 'vuetify/lib';
+import { VDigitalTimePicker } from 'v-digital-time-picker'
+
+
 
 
 window.Vue = require('vue');
@@ -31,6 +34,19 @@ Vue.component('SelectionFormateur', require('./components/SelectionFormateur.vue
 Vue.component('SelectionFormateur', require('./components/SelectionFormateur.vue').default);
 Vue.component('SelectionCalendar', require('./components/SelectionCalendar.vue').default);
 Vue.component('PlanFormation', require('./components/PlanFormation.vue').default);
+Vue.component('CreationPlan', require('./components/CreationPlan.vue').default);
+Vue.component('ListFormation', require('./components/ListFormation.vue').default);
+Vue.component('GestionListFormation', require('./components/GestionListFormation.vue').default);
+Vue.component('LigneFormation', require('./components/LigneFormation.vue').default);
+Vue.component('Categories', require('./components/Categories.vue').default);
+Vue.component('SousCategories', require('./components/SousCategories.vue').default);
+Vue.component('Contenus', require('./components/Contenus.vue').default);
+Vue.component('CreationCategorie', require('./components/CreationCategorie.vue').default);
+Vue.component('CreationSousCategorie', require('./components/CreationSousCategorie.vue').default);
+Vue.component('CreationContenu', require('./components/CreationContenu.vue').default);
+Vue.component('v-digital-time-picker', VDigitalTimePicker)
+
+
 
 
 
@@ -40,6 +56,7 @@ Vue.component('PlanFormation', require('./components/PlanFormation.vue').default
     store,
     router,
     vuetify,
+
 
 
     })

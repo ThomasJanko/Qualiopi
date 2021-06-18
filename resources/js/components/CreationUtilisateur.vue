@@ -1,8 +1,14 @@
 <template>
 
-    <v-container  >
+    <v-container>
+
+        <h1 class='titre pa-15 ml-15 mr-15 justify-center grey--text ' color='red' > Créez un nouvel utilisateur ! </h1>
+
             <v-row  justify="center" no-gutters>
                 <v-card  class="elevation-12 text-center" justify="center" width="600">
+            <v-snackbar width="1000" class="text-center" shaped bottom elevation="24"  :value="message=='false'?false:true" :color="error==true?'error':'success'" timeout="4000" >
+             {{message}}
+            </v-snackbar>
 
                     <v-col order="auto">
                         <v-card-title slot="user-title" >
@@ -12,17 +18,11 @@
                         </v-card-title>
                         <v-divider></v-divider>
                     </v-col>
-
                     <v-col order>
-
                     <v-card-text>
-
-
-
-
                         <v-form>
                             <v-text-field
-                            label="Prénom"
+                            label="Prénom*"
                             name="Surname"
                             prepend-icon="mdi-format-title"
                             type="text"
@@ -32,7 +32,7 @@
 
 
                             <v-text-field
-                            label="Nom"
+                            label="Nom*"
                             name="Name"
                             prepend-icon=" mdi-format-text-variant-outline"
                             type="text"
@@ -42,7 +42,7 @@
 
 
                             <v-text-field
-                            label="Email"
+                            label="Email*"
                             name="Email"
                             prepend-icon="mdi-email"
                             type="email"
@@ -93,7 +93,7 @@
 
 
                             <v-text-field
-                            label="Mot de passe"
+                            label="Mot de passe*"
                             name="password"
                             prepend-icon="mdi-lock"
                             :type="showPassword ? 'text' : 'password' "
@@ -105,13 +105,12 @@
                             </v-text-field>
 
                              <v-text-field
-                            label="Confirmation mot de passe"
+                            label="Confirmation mot de passe*"
                             name="confirm_password"
                             prepend-icon="mdi-lock"
                             :type="showPassword ? 'text' : 'password' "
                             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                             @click:append="showPassword=!showPassword"
-
                             color="primary accent-6"
                             v-model="form.password_confirmation">
                             </v-text-field>
@@ -162,15 +161,15 @@ export default {
         surname: '',
         email : '',
         password: '',
-        roles_id: '',
+        role_id: '',
+        client_id: '',
 
-
-        // client_id :''
         },
         disabled: false,
         showPassword: false,
-        snackbar: false,
-         text: `Successfully registered`,
+        message: "false",
+        error: 'false',
+        text: `Successfully registered`,
         loader: null,
         loading3: false,
         inputRules: [
@@ -181,56 +180,58 @@ export default {
         errors : [],
         label: 'Role',
         label2 :'Société',
-        selectedClient: [],
         roleId: '',
         }
 
     },
 
     methods: {
-
+        //frme le popup
           close(){
 
                 this.$emit('closeform')
         },
+
+        //enregistre un nouvel utilisateur
         enregistrer(){
 
-            let form ={...this.form  }
+            let form ={...this.form}
             form.client_id = this.formation.selectedClient.id // ajout de l'id du client
 
         if(this.roleId ==='Admin'){
             form.role_id = '1';
-        }else if(this.roleId ==='Client'){
-             form.role_id = '2'
         }else if(this.roleId ==='Formateur'){
+             form.role_id = '2'
+        }else if(this.roleId ==='Client'){
              form.role_id = '3'}
         else {form.role_id = '4'};
          // ajout de l'id du role
 
-            User.register(form)// Il faut récupérer l'objet User créé -> l'ajouter dans le store dans selectedUser et mettre à jour itemsUsers dans le store
-            .then(response=> {
-                console.log(response.data)
-                this.formation.selectedUser.push(response.data);
+//puis POST
+            User.register(this.form)
+                .then(response=> {
 
-                 console.log(this.formation.selectedUser)
+                // console.log(response.data)
+                this.formation.selectedUser.push(response.data);
                 this.form= {
                         name : '',
                         surname: '',
                         email : '',
                         password: '',
-
-                        roles_id: ''
-
-
-                        // client_id :''
-                        }
+                        client_id: '',
+                        role_id: '',
+                }
                         this.roleId = [],
                         this.selectedClient= [],
 
-                this.snackbar=true;
-                console.log('Vous êtes bien eregistré')
+                this.message ="utilisateur enregistré avec succès !";
+                this.error=false;
+                // console.log('Vous êtes bien eregistré')
             }).catch(error => {
-                console.log('test')
+                this.message="Echec lors de la création de l'utilisateur !"
+                this.error=true;
+                // console.log('RoleId:' +this.form.role_id)
+                // console.log('Client_id: '+this.form.client_id)
                 if(error.status === 422){
                     this.errors = error.data.errors;
 
@@ -241,11 +242,14 @@ export default {
 
     computed: {
             ...mapState (['formation']),
-            //   selectedClient:{
-            //     get(){
-            //         return this.$store.state.formation.selectedClient
-            //     },
-            //   }
+              selectedClient:{
+                get(){
+                    return this.$store.state.formation.selectedClient
+                },
+                 set(data){
+                 this.$store.dispatch('UPDATE_FORMATION_CLIENT',data)
+                 }
+              }
     },
 
 
@@ -275,12 +279,14 @@ export default {
 
         if(!!this.$slots.typeuser && this.$slots.typeuser[0].text =="Stagiaire"){
                 this.form.role_id='4'
+
                 this.label=this.$slots.typeuser[0].text
                 this.disabled = true
         }
         if(!!this.$slots.typeuser && this.$slots.typeuser[0].text =="Formateur"){
 
                 this.form.role_id='2'
+                this.form.client_id = '1'
                 this.label=this.$slots.typeuser[0].text
                 this.disabled = true
         }
@@ -289,6 +295,7 @@ export default {
         if(!!this.$slots.typesociety && this.$slots.typesociety[0].text =="Society"){
 
                 this.label2=this.$store.state.formation.selectedClient.social_reason
+                this.form.client_id = this.$store.state.formation.selectedClient.id
                 this.disabled = true
         }
 

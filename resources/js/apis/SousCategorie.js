@@ -6,32 +6,32 @@ export default{
 
     async add(form){
         await Csrf.getCookie();
-        return Api.post('create/listformations',form);
+        return Api.post('add/souscategorie',form);
 
     },
-    async edit(id){
+    // async edit(id){
+    //     await Csrf.getCookie();
+    //     return Api.post('/update/listformations',+id);
+
+    // },
+
+    // async delete(id){
+    //     await Csrf.getCookie();
+    //     return Api.delete('/deactivate/listformations',+id);
+
+    // },
+    async listsouscategories(id){
         await Csrf.getCookie();
-        return Api.post('/update/listformations',+id);
-
+        return Api.get('/formation/'+id+'/listsouscategories')
     },
 
-    async delete(id){
-        await Csrf.getCookie();
-        return Api.delete('/deactivate/listformations',+id);
-
-    },
 
     async index()
     {
         await Csrf.getCookie();
-        return Api.get('/listsouscategorie/contenus');
+        return Api.get('/listsouscategorie/souscategories');
     },
 
 
-
-    async listcontenus(id){
-        await Csrf.getCookie();
-        return Api.get('/formation/'+id+'/listsouscategorie/contenus')
-    },
 
 }

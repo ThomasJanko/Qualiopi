@@ -1,7 +1,11 @@
 <template>
+
+
     <v-container >
 
-         <v-snackbar  shaped bottom elevation="24"  :value="message=='false'?false:true" :color="error==true?'error':'success'" timeout="4000" >
+        <h1 class='titre pa-15 ml-15 mr-15  justify-center grey--text ' color='red' > Créez le profil d'un nouveau client ! </h1>
+
+         <v-snackbar width="1000" class="text-center" shaped bottom elevation="24"  :value="message=='false'?false:true" :color="error==true?'error':'success'" timeout="4000" >
              {{message}}
             </v-snackbar>
             <v-row  justify="center" no-gutters>
@@ -22,7 +26,7 @@
 
                         <v-form>
                             <v-text-field
-                            label="Société"
+                            label="Société*"
                             name="Society"
                             prepend-icon="mdi-format-title"
                             type="text"
@@ -31,7 +35,7 @@
                             </v-text-field>
 
                             <v-text-field
-                            label="Email"
+                            label="Email*"
                             name="Email"
                             prepend-icon="mdi-email"
                             type="email"
@@ -42,7 +46,7 @@
 
 
                             <v-text-field
-                            label="Pays"
+                            label="Pays*"
                             name="Country"
                             prepend-icon=" mdi-flag-variant"
                             type="text"
@@ -51,7 +55,7 @@
                             </v-text-field>
 
                              <v-text-field
-                            label="Ville"
+                            label="Ville*"
                             name="City"
                             prepend-icon="  mdi-home-city-outline"
                             type="text"
@@ -60,7 +64,7 @@
                             </v-text-field>
 
                              <v-text-field
-                            label="Adresse"
+                            label="Adresse*"
                             name="Address"
                             prepend-icon="mdi-google-maps"
                             type="text"
@@ -69,7 +73,7 @@
                             </v-text-field>
 
                             <v-text-field
-                            label="Code Postal"
+                            label="Code Postal*"
                             name="Postal"
                             prepend-icon="mdi-home-map-marker"
                             type="text"
@@ -90,22 +94,7 @@
                                 <v-btn  class=" dark pa-2 primary" @keydown.enter="enregistrer()" :x-small="$vuetify.breakpoint.mdAndUp?false:true" @click="enregistrer(); close()" rounded>Enregistrer</v-btn>
                             </v-col>
 
-                            <v-snackbar bottom
-                            v-model="snackbar"
-                            >
-                            Client enregistré avec succés
 
-                            <template v-slot:action="{ attrs }">
-                                <v-btn
-                                color="primary"
-                                text
-                                v-bind="attrs"
-                                @click="snackbar = false"
-                                >
-                                Close
-                                </v-btn>
-                            </template>
-                            </v-snackbar>
                         </v-row>
 
                         <v-row>
@@ -144,7 +133,7 @@ export default {
         },
 
         message:"false",
-
+        error: 'false',
         loader: null,
         loading3: false,
 
@@ -157,19 +146,24 @@ export default {
     },
 
     methods: {
+        //ferme le popup
         close(){
 
                 this.$emit('closeform')
         },
+        //enregistre le nouveau client
         enregistrer(){
             Client.register(this.form)
             .then(()=> {
-                this.snackbar=true;
+
                 this.loader = 'loading3';
                 this.form ='';
-                this.message="Mot de passe modifié avec succès !!";
+                this.message="Client créé avec succés !";
+                this.error=false;
 
             }).catch(error => {
+                this.message="Echec lors de la création du client !";
+                this.error=true;
                 if(error.response.status === 422){
                     this.errors = error.response.data.errors;
                 }

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Categorie;
+use App\Models\Listformation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Souscategorie extends Model
 {
@@ -13,16 +15,21 @@ class Souscategorie extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['title', 'contenu_id'];
+    protected $fillable = ['title'];
 
     public function listformations()
     {
-        return $this->belongsToMany(Listformation::class); //->pivot with formation
+        return $this->hasMany(Listformation::class); //, 'souscategories_id'
     }
-
-    public function contenus()
+    public function categorie()
     {
-        return $this->belongsToMany(Contenu::class); //->pivot with formation
-    }
+        return $this->belongsToMany(Categorie::class, Listformation::class, 'souscategorie_id', 'categorie_id');
 
+    }
 }
+    // public function contenus()
+    // {
+    //     return $this->belongsToMany(Listformation::class);
+    // }
+
+

@@ -65,7 +65,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();//->toArray();
+        $users = User::with('client')->get();//->toArray();
         //return response()->json(['users'=>$users]);  //all users
         return response()->json($users);
     }

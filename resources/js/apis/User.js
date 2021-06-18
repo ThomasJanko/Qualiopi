@@ -24,7 +24,7 @@ export default{
        //information des users
        async index(){
         await Csrf.getCookie();
-        return Api.get('/test')
+        return Api.get('/user/index')
     },
        //Récupération des utilisateurs d'un client
        async listUserOfClient(id){

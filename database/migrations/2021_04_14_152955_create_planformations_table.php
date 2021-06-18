@@ -17,7 +17,9 @@ class CreatePlanformationsTable extends Migration
             $table->id();
             $table->string('name_formation');
             $table->string('time_formation');
-            $table->unsignedBigInteger('ligneplanformation_id');
+            $table->unsignedBigInteger('formation_id');
+            $table->unsignedBigInteger('user_id');
+
 
             $table->timestamps();
         });

@@ -14,9 +14,9 @@ class Planformation extends Model
 {
     use HasFactory;
 
-    // protected $table = 'planformations';
+     protected $table = 'planformations';
 
-    protected $fillable = ['name','timeFormation'];
+    protected $fillable = ['name_formation','time_formation', 'formation_id', 'user_id'];
 
     public function formation()
     {

@@ -40,7 +40,7 @@ Route::get('/info/users', 'UserController@index');
 Route::get('/edit/user/{id}', 'UserController@edit');
 Route::post('/update/user', 'UserController@udpate');
 Route::delete('/deactivate/user/{id}', 'UserController@deactivate');
-Route::get('/test', 'UserController@index');
+Route::get('/user/index', 'UserController@index');
 Route::get('/client/{id}/users', 'UserController@listUserOfClient');
 Route::get('/formation/formateur', 'UserController@listFormateur');
 Route::get('/user/role/{id}', 'UserController@listUserByRole');
@@ -56,22 +56,57 @@ Route::get('formation/{id}/infos/','FormationController@infosFormation');
 
 
 // Creation Plan de formation
-Route::post('/planformation', 'PlanFormationController@index');
-Route::post('formation/{id}/plan/', 'FormationController@PlanFormation');
+
+Route::get('formation/{id}/plan/', 'FormationController@PlanFormation');
+Route::get('/planformation', 'PlanFormationController@infosPlanformation');
 
 
 // Création List  formations
 Route::get('/listformations', 'ListFormationsController@index');
-Route::post('create/listformation/', 'ListFormationsController@add');
+Route::post('add/listformation/', 'ListFormationsController@add');
 Route::post('update/listformation/{id}', 'ListFormationsController@edit');
-Route::delete('deactivate/list/formation/{id}', 'ListFormationsController@delete');
+Route::get('delete/listformation/{id}', 'ListFormationsController@delete');
 Route::get('formation/listformations','ListFormationsController@listFormation');
 Route::get('/formation/{id}/listsouscategories','ListFormationsController@listsouscategories');
+Route::post('/create/categorie/','ListFormationsController@addCategorie');
+Route::post('/create/souscategorie/','ListFormationsController@addSousCategorie');
+
+Route::get('/listformation/contenus','ListFormationsController@contenus');
 
 
-//List contenus Souscategories
-Route::get('/formation/{id}/listsouscategories.contenus','SousCategoriesController@listcontenus');
-Route::get('/listsouscategorie/contenus','SousCategoriesController@index');
+
+// List des informations
+Route::get('/informations', 'InformationsController@index');
+
+//PLan de formation
+Route::post('/create/planformation/','PlanFormationController@add');
+Route::post('/formation/{id}/plan/','PlanFormationController@PlanFormation');
+
+
+
+//Ligne formation
+Route::get('/index/ligneformation/','LigneplanformationController@index');
+Route::post('/create/ligneformation/','LigneplanformationController@add');
+Route::get('/formation/{id}/lignesformation/','LigneplanformationController@lignesFormation');
+
+//Categories
+Route::get('/listcategorie/categories','CategoriesController@index');
+Route::get('/listcategorie/categories/all','CategoriesController@indexall');
+Route::post('/add/categorie','CategoriesController@add');
+Route::post('/edit/categorie','CategoriesController@edit');
+
+
+
+// Souscategories
+Route::get('/formation/{id}/listsouscategories/','SousCategoriesController@listsouscategories');
+Route::get('/formation/{id}/listcategories/','SousCategoriesController@listcategories');
+Route::get('/listsouscategorie/souscategories','SousCategoriesController@index');
+Route::get('/formation/{id}/listsouscategorie/listcontenus','SousCategoriesController@listcontenus');
+Route::post('/add/souscategorie','SousCategoriesController@add');
+
+
+
+
 
 
 // Création Dates formations
@@ -79,6 +114,8 @@ Route::get('/datesformation', 'DateController@index');
 Route::post('create/datesformation/', 'DateController@add');
 Route::post('update/datesformation/{id}', 'DateController@edit');
 Route::get('delete/datesformation/{id}', 'DateController@delete');
+
+
 
 
 
@@ -90,3 +127,5 @@ Route::middleware('auth:sanctum')->get('/user', 'LoginController@getUser');
 
 //UPDATES
 Route::post('/resetPassword', 'RegisterController@resetPassword');
+
+Route::post('/updateState/{id}', 'FormationController@updateState');

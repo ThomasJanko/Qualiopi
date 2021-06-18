@@ -15,7 +15,7 @@
 
                     <v-card-text>
 
-                        <div class="text-center ">
+                        <!-- <div class="text-center ">
                             <v-btn icon :small="$vuetify.breakpoint.mdAndUp?false:true" href="https://www.facebook.com/gestimum/" class="mx-2" outlined="">
                                 <v-icon :small="$vuetify.breakpoint.mdAndUp?false:true"  >mdi-facebook</v-icon>
                             </v-btn>
@@ -25,22 +25,20 @@
                             <v-btn icon :small="$vuetify.breakpoint.mdAndUp?false:true" href="https://twitter.com/gestimum_erp?lang=en" class="mx-2" outlined>
                                 <v-icon :small="$vuetify.breakpoint.mdAndUp?false:true" >mdi-twitter</v-icon>
                             </v-btn>
-                        </div>
+                        </div> -->
 
                         <v-form>
+
                             <v-text-field
-                            label="Email"
+                            label="Email*"
                             name="Email"
                             prepend-icon="mdi-email"
                             type="email"
                             color="primary accent-6"
                             v-model="form.email">
                             </v-text-field>
-                            <span class="text-danger" v-if="errors.email">
-                                {{ errors.email[0] }}
-                            </span>
                             <v-text-field
-                            label="Mot de passe"
+                            label="Mot de passe*"
                             name="password"
                             prepend-icon="mdi-lock"
                             :type="showPassword ? 'text' : 'password' "
@@ -50,9 +48,12 @@
                             @keydown.enter="login"
                             v-model="form.password">
                             </v-text-field>
-                            <span class="text-danger" v-if="errors.password">
-                                {{ errors.password[0] }}
+                            <span class="text-danger" v-if="errors.email">
+                            <p> Veuillez vérifier votre adresse email ou votre mot de passe !</p>
                             </span>
+                            <!-- <span class="text-danger" v-if="errors.password">
+                                <p> Votre mot de passe est incorrecte !</p>
+                            </span> -->
                         </v-form>
 
                     </v-card-text>
@@ -63,14 +64,44 @@
                             </v-col>
                             <v-spacer></v-spacer>
                             <v-col cols=auto>
-                                <v-btn text class="accent--text pa-2" :x-small="$vuetify.breakpoint.mdAndUp?false:true">Mot de passe oublié ?</v-btn>
+                            <v-btn text class="accent--text pa-2" :x-small="$vuetify.breakpoint.mdAndUp?false:true">Mot de passe oublié ?</v-btn>
+
                             </v-col>
                         </v-row>
 
                         <v-row>
                         </v-row>
                     </v-col >
+                    <v-progress-linear
+                        :active="loading"
+                        :indeterminate="loading"
+                        absolute
+                        bottom
+                        color="#f78736"
+                    >
+                    </v-progress-linear>
+
+                       <!-- <v-container style="height: 282px;">
+      <v-row
+        class="fill-height"
+        align="center"
+        justify="center"
+      >
+        <v-scale-transition>
+          <div
+            v-if="!loading"
+            class="text-center"
+          >
+            <v-btn
+              color="primary"
+              @click="loading = true"
+            >Start loading</v-btn>
+          </div>
+        </v-scale-transition>
+      </v-row>
+    </v-container> -->
                 </v-card>
+
             </v-row>
         </v-container>
 
@@ -138,31 +169,43 @@ export default {
             loader: null,
             loading3: false,
             errors : [],
+            loading: false,
 
         }
 
     },
 
     methods: {
+        //authentification utilisateur
         login(){
 
+        this.loading = true;
+
         User.login(this.form).then(response => {
-            this.$root.$emit('login', true) //TODO: besoin d'éclaircifier le role de l'émit
+
+            this.$root.$emit('login', true) //TODO: besoin0 d'éclaircifier le role de l'émit
             localStorage.setItem('auth', 'true');
             this.$router.push({ name : 'home'});
             this.$store.commit('INFO_USERS' , response.data)
-        })
+
+            })
         .catch( error => {
             if(error.response.status === 422){
                 this.errors = error.response.data.errors
+                this.loading = false;
+            }else if(error.response.status === 401){
+                this.errors = error.response.data.errors
+                console.log('vous avez été déconnectez')
+
             }
         })
+
 
         },
 
     },
 
-
+//loading
      watch: {
        loader () {
          const l = this.loader
@@ -172,6 +215,13 @@ export default {
 
          this.loader = null
        },
+           loading (val) {
+        if (!val) return
+
+        setTimeout(() => (this.loading = false), 500)
+      }, else(val){
+          return this.loading = true
+      }
     },
 
     computed:{

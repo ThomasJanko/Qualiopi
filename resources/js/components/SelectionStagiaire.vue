@@ -6,7 +6,7 @@
         <v-flex col-6>
           <v-autocomplete height="50"
             v-model="selectedUser"
-            :items="$store.state.formation.itemsStagiaire"
+            :items="stagiaires"
             outlined
             rounded
             clearable
@@ -19,6 +19,7 @@
             item-text="email"
             item-value="id"
           >
+          <!-- :items="$store.state.formation.itemsStagiaire" -->
 
 
                 <template v-slot:selection="data">
@@ -48,6 +49,8 @@
        </CreationUtilisateur>
 
 
+
+
     </v-dialog>
     </v-flex>
 </v-row>
@@ -62,21 +65,32 @@ export default ({
     data() {
         return {
             dialog: false,
+            tests: [],
         }
 
 
     },
     mounted(){
 
+//Liste des Stagiaires d'un client
+        User.listUserOfClient(this.$store.state.formation.selectedClient.id)
 
-        User.listUserOfClient(this.$store.state.formation.selectedClient.id) //List des Stagiaires
             .then(response =>{
+            // console.log(this.$store.state.formation.selectedClient.id)
             this.$store.state.formation.itemsStagiaire= response.data
+            this.tests= response.data
 
                 })
             .catch(error => console.log(error))
 
-        },
+
+    },
+
+    methods: {
+
+    },
+
+
     computed: {
         ...mapState['formation'],
 
@@ -86,8 +100,14 @@ export default ({
             },
             set(data){
                 this.$store.commit('UPDATE_FORMATION_USER',data)
-            }
+            },
+
+
     },
+    //Dans utilisateurs --> filtre role_id == 4
+        stagiaires(){
+                    return  this.tests.filter(b => b.role_id == '4')
+        }
     }
 })
 </script>

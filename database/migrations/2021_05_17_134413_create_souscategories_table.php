@@ -16,7 +16,7 @@ class CreateSouscategoriesTable extends Migration
         Schema::create('souscategories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedBigInteger('contenu_id');
+
         });
     }
 

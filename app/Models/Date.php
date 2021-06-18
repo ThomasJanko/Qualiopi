@@ -9,11 +9,11 @@ class Date extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['dateformation', 'heuredebut', 'heurefin'];
+    protected $fillable = ['name', 'dateid', 'start', 'end', 'formation_id'];
 
     public function formations()
 {
-    return $this->belongsToMany(Formation::class);
+    return $this->belongsTo(Formation::class);
 }
 
 

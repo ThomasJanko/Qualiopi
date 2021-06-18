@@ -90,12 +90,12 @@
                 color="primary"
                 @click="modal2 = false"
             >
-                Fermer
+                Fermere
             </v-btn>
             <v-btn
                 text
                 color="primary"
-                @click="$refs.dialog.save(horairefin)"
+                @click="$refs.dialog.save(horairefin)"  s
             >
                 OK
             </v-btn>

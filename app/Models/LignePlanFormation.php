@@ -9,13 +9,13 @@ class Ligneplanformation extends Model
 //Pivot entre Plan de formation et contenu de formation
 {
     // protected $table = 'ligneformations';
+    // protected $appends = ['planformation_id'];
+    protected $fillable = ['planformation_id','Categorie', 'SousCategorie', 'Contenu'];
 
-    protected $fillable = ['planformation_id', 'contenuformation_id'];
 
-
-    public function planformations()
+    public function planformation()
     {
-        return $this->belongsToMany(Planformation::class);
+        return $this->belongsTo(Planformation::class, 'ligneformation_id');
     }
 
     // public function contenuformations()
@@ -25,8 +25,7 @@ class Ligneplanformation extends Model
 
     public function listformations()
     {
-        return $this->hasMany(ListFormation::class);
+        return $this->belongsToMany(ListFormation::class);
     }
-
 
 }

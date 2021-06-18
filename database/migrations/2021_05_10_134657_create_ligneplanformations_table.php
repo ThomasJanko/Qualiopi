@@ -15,7 +15,10 @@ class CreateLigneplanformationsTable extends Migration
     {
         Schema::create('ligneplanformations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('listformations_id');
+            $table->unsignedBigInteger('planformation_id');
+            $table->String('Categorie');
+            $table->String('SousCategorie');
+            $table->String('Contenu');
 
             $table->timestamps();
         });

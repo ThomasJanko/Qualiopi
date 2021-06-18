@@ -32,29 +32,40 @@ export default new Vuex.Store({
             itemsClient: [],
             itemsFormateur: [],
             clients: [],
-            // selectedDate : [],
+            // datesSelected : [],
+
 
             selectedCategorie: [],
             ItemsSouscategories: [],
             selectedSouscategorie: [],
-            contenus: [],
+            planformationId: '',
+            selectedContenus: [],
+            Categories: [],
+            SousCategories: [],
+            Contenus: [],
+            plan: {},
         },
 
 
-        events:[],
-
-        dates : [],
-
-        calendar:{
-
-            dateformation:[],
-            heuredebut: [],
-            heurefin:[],
-        },
+        events: []
 
 
 
 
+
+        // calendar:{
+
+        //     dateformation:[],
+        //     heuredebut: [],
+        //     heurefin:[],
+
+        // },
+
+
+        // name_formation :'',
+        // time_formation :'',
+        // formation_id :'',
+        // user_id :'',
 
     },
 
@@ -66,14 +77,12 @@ export default new Vuex.Store({
         },
         // Mettre à jour les infos du l'autocomplete
         UPTADE_FORMATION_CLIENT(state, data){
-
             if(data == null){
                 data = {
                     disable: ''
                 }
           }
             state.formation.selectedClient = data;
-
         },
 
         UPDATE_FORMATION_USER(state, data){
@@ -145,31 +154,66 @@ export default new Vuex.Store({
             state.formation.selectedSouscategorie = data;
         },
 
-        UPDATE_ITEMS_CONTENUS(state, data){
-            state.formation.contenus = data;
+        UPDATE_SELECTED_CONTENUS(state, data){
+            state.formation.selectedContenus = data;
+        },
+
+        UPDATE_PLANFORMATIONID(state, data){
+            state.formation.planformationId = data;
         },
 
 
+        //test plan
+        UPDATE_PLAN(state, data){
+            state.formation.plan = data;
+        },
+
+
+//-------------------------------------------------------------//
+
+        // Categories / SousCategories / Contenus
+        UPDATE_CATEGORIES(state, data){
+            state.formation.Categories = [...data];
+        },
+        UPDATE_SOUSCATEGORIES(state, data){
+            state.formation.SousCategories = [...data];
+        },
+        UPDATE_CONTENUS(state, data){
+            state.formation.Contenus = [...data];
+        },
+
+//-------------------------------------------------------------------//
 
         UPDATE_EVENT(state, data){
             state.events.push(data);
         },
 
-        UPDATE_DATEFORMATION(state, data){
-            state.calendar.dateformation = data;
+        // UPDATE_DATES(state, data){
+        //     state.dates.push(data);
+        // },
+
+        // UPDATE_DATEFORMATION(state, data){
+        //     state.calendar.dateformation = data;
+        // },
+
+        // UPDATE_HEUREDEBUT(state, data){
+        //     state.calendar.heuredebut = data;
+        // },
+
+        // UPDATE_HEUREFIN(state, data){
+        //     state.calendar.heurefin = data;
+        // },
+
+        UPDATE_DATESSELECTED(state, data){
+            state.formation.datesSelected = data;
         },
 
-        UPDATE_HEUREDEBUT(state, data){
-            state.calendar.heuredebut = data;
-        },
 
-        UPDATE_HEUREFIN(state, data){
-            state.calendar.heurefin = data;
-        },
+        //test date id recuperatio napres selection
 
-        UPDATE_DATES(state, data){
-            state.dates = data;
-        }
+        UPDATE_DATESFORMATIONID(state, data){
+            state.dateid = data
+        },
 
 
 
@@ -193,9 +237,6 @@ export default new Vuex.Store({
             commit('UPTADE_CLIENTS',data )
         },
 
-
-
-
         UPDATE_ITEMS_FORMATEUR({commit},data){
             commit('UPTADE_ITEMS_FORMATEUR',data )
         },
@@ -210,6 +251,10 @@ export default new Vuex.Store({
 
         UPDATE_HEUREFIN({commit},data){
             commit('UPDATE_HEUREFIN',data )
+        },
+
+        UPDATE_DATESSELECTED({commit},data){
+            commit('UPDATE_DATESSELECTED',data )
         },
         // UPDATE_FORMATION_DATE({commit},data){
         //     commit('UPTADE_FORMATION_DATE',data )
@@ -237,14 +282,48 @@ export default new Vuex.Store({
             commit('UPDATE_SELECTED_CATEGORIE',data )
         },
 
-        UPDATE_ITEMS_CONTENUS({commit},data){
-            commit('UPDATE_ITEMS_CONTENUS',data )
+        UPDATE_SELECTED_CONTENUS({commit},data){
+            commit('UPDATE_SELECTED_CONTENUS',data )
+        },
+
+        UPDATE_PLANFORMATIONID({commit},data){
+            commit('UPDATE_PLANFORMATIONID',data )
+        },
+
+        // plan test
+        UPDATE_PLAN({commit},data){
+            commit('UPDATE_PLAN',data )
         },
 
 
-        UPDATE_SDATES({commit},data){
-            commit('UPDATE_DATES',data )
+
+
+        // Categories / SousCategories / Contenus
+
+
+        UPDATE_CATEGORIES({commit},data){
+            commit('UPDATE_CATEGORIES',data )
         },
+        UPDATE_SOUSCATEGORIES({commit},data){
+            commit('UPDATE_SOUSCATEGORIES',data )
+        },
+         UPDATE_CONTENUS({commit},data){
+            commit('UPDATE_CONTENUS',data )
+        },
+
+        //-----------------------------------//
+
+
+        // UPDATE_DATES({commit},data){
+        //     commit('UPDATE_DATES',data )
+        // },
+
+        //test
+        UPDATE_DATESFORMATIONID({commit},data){
+            commit('UPDATE_DATESFORMATIONID',data )
+        },
+
+
 
     }
 

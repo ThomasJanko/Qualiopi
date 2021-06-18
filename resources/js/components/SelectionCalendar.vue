@@ -1,306 +1,183 @@
 <template>
     <v-row>
-        <!-- CHOIX DES DATES POUR LE FORMULAIRE FORMATION -->
-        <v-col>
-               <v-sheet height="64">
-        <v-toolbar
-          flat
-        >
-          <v-btn
-            outlined
-            class="mr-4"
-            color="grey darken-2"
-            @click="setToday"
-          >
-           Aujourd'hui
-          </v-btn>
-          <v-btn
-            fab
-            text
-            small
-            color="grey darken-2"
-            @click="prev"
-          >
-            <v-icon small>
-              mdi-chevron-left
-            </v-icon>
-          </v-btn>
-          <v-btn
-            fab
-            text
-            small
-            color="grey darken-2"
-            @click="next"
-          >
-            <v-icon small>
-              mdi-chevron-right
-            </v-icon>
-          </v-btn>
+         <v-col>
+            <v-sheet height="64">
+                <v-toolbar
+                     lat
+                    >
+                    <!-- <v-btn
+                        outlined
+                        class="mr-4"
+                        color="grey darken-2"
+                        @click="setToday"
+                    >
+                    Aujourd'hui
+                    </v-btn> -->
+                     <v-btn
+                        fabnpm
+                        text
+                        small
+                        color="grey darken-2"
+                         @click="prev"
+                        >
+                        <v-icon small>
+                        mdi-chevron-left
+                        </v-icon>
+                    </v-btn>
+                    <v-btn
+                        fab
+                        text
+                        small
+                        color="grey darken-2"
+                         @click="next"
+                        >
+                        <v-icon small>
+                             mdi-chevron-right
+                        </v-icon>
+                    </v-btn>
 
-
-
-
-          <v-toolbar-title v-if="$refs.calendar">
-            {{ $refs.calendar.title }}
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-menu
-            bottom
-            right
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                outlined
-                color="grey darken-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <span>{{ typeToLabel[type] }}</span>
-                <v-icon right>
-                  mdi-menu-down
-                </v-icon>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item @click="type = 'day'">
-                <v-list-item-title>Jour</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="type = 'week'">
-                <v-list-item-title>Semaine</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="type = 'month'">
-                <v-list-item-title>Mois</v-list-item-title>
-              </v-list-item>
-             </v-list>
-          </v-menu>
-        </v-toolbar>
-      </v-sheet>
-
-
-
-            <v-sheet height="450" width="103%">
-                <v-calendar
-                    ref="calendar"
-                    :events="events"
-                    @click:date="choosedDate"
-                    @click:event="showEvent"
-                    color="primary"
-                    v-model="dateformation"
-                    multiple
-                    :type="type"
-                >
-                </v-calendar>
+                     <v-toolbar-title v-if="$refs.calendar">
+                        {{ $refs.calendar.title }}
+                    </v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-menu
+                            bottom
+                            right
+                            >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    outlined
+                                    color="grey darken-2"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    >
+                                    <span>{{ typeToLabel[type] }}</span>
+                                    <v-icon right>
+                                    mdi-menu-down
+                                    </v-icon>
+                                </v-btn>
+                            </template>
+                            <v-list>
+                                <v-list-item @click="type = 'day'">
+                                    <v-list-item-title>Jour</v-list-item-title>
+                                </v-list-item>
+                            <v-list-item @click="type = 'week'">
+                                <v-list-item-title>Semaine</v-list-item-title>
+                            </v-list-item>
+                                <v-list-item @click="type = 'month'">
+                                    <v-list-item-title>Mois</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                    </v-menu>
+                </v-toolbar>
             </v-sheet>
-        </v-col>
-
-
-    <!-- CHOIX DES HORAIRES POUR LE FORMULAIRE FORMATION -->
-    <v-dialog v-model="dialog"
-        persistent
-        max-width="600px"
-
-        overlay-color = "white">
-        <v-row>
-        <v-col
-        cols="11"
-        sm="5"
-    >
-    <v-menu
-        ref="menu"
-        v-model="menu2"
-        :close-on-content-click="false"
-        :nudge-right="40"
-        :return-value.sync="heuredebut"
-        transition="scale-transition"
-        offset-y
-        max-width="290px"
-        min-width="290px"
-    >
-    <template v-slot:activator="{ on, attrs }">
-        <v-text-field
-            v-model="heuredebut"
-            label="Horaire de début"
-            prepend-icon="mdi-clock-time-four-outline"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-        >
-            </v-text-field>
-        </template>
-        <v-time-picker
-            v-if="menu2"
-            v-model="heuredebut"
-            full-width
-
-            @click:minute="$refs.menu.save(heuredebut)"
-        >
-            </v-time-picker>
-        </v-menu>
-    </v-col>
-        <v-spacer></v-spacer>
-        <v-col
-        cols="11"
-        sm="5"
-        >
-        <v-dialog
-            ref="dialog"
-            v-model="modal2"
-            :return-value.sync="heurefin"
-            persistent
-            width="290px"
-        >
-            <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-                v-model="heurefin"
-                label="Horaire de fin"
-                prepend-icon="mdi-clock-time-four-outline"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-            ></v-text-field>
-            </template>
-            <v-time-picker
-            v-if="modal2"
-            v-model="heurefin"
-            full-width
-            >
-            <v-spacer></v-spacer>
-            <v-btn
-                text
-                color="primary"
-                @click="modal2 = false"
-            >
-                Fermer
-            </v-btn>
-            <v-btn
-                text
-                color="primary"
-                @click="$refs.dialog.save(heurefin)"
-            >
-                OK
-            </v-btn>
-            </v-time-picker>
-        </v-dialog>
-    </v-col>
-</v-row>
-
- <!-- AJOUTER UNE INFORMATION SUR LE FORMULAIRE DE FORMATION -->
- <!-- <v-container fluid>
-    <v-row>
-      <v-col cols="4">
-        <v-subheader>Information</v-subheader>
-      </v-col>
-      <v-col cols="8">
-        <v-text-field
-          label="Note"
-          v-model="value"
-        ></v-text-field>
-      </v-col>
-    </v-row>
-  </v-container> -->
-
-  <!-- FIN DU SEGMENT D'AJOUT INFORMATION SUR LE FORMULAIRE DE FORMATION -->
-            <v-btn
-                color="orange"
-                text
-                @click="chooseHours"
-            >
-                Enregistrer
-            </v-btn>
-             <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Annuler
-          </v-btn>
-    </v-dialog>
-
-
-
-
-
-<!--
-        <v-text-field v-model="horairedebut" >
-         <h1>{{horairedebut}}</h1>
-        </v-text-field>
-        <h3>Heure de début</h3>
-
-        <v-text-field v-model="horairefin">
-            <h1>{{horairefin}}</h1>
-        </v-text-field>
-        <h3>Heure de fin</h3> -->
-
-<v-card-actions>
-    <v-card-subtitle>
-        <v-text-field
+        <v-sheet height="450" width="103%">
+        <v-calendar
+            ref="calendar"
+            :events="events"
+            @click:date="choosedDate"
+            color="primary"
             v-model="dateformation"
-            label="Date selectionnée"
-            disabled
-        >
-        <h1>{{dateformation}}</h1>
-        </v-text-field>
-    </v-card-subtitle>
+            multiple
+            :type="type"
+            locale="fr"
+            @click:event="showEvent"
 
-
-
-    <v-card-subtitle>
-        <v-row>
-            <v-col
-                cols="12"
-                sm="6"
-                >
-                <v-text-field
-                v-model="heuredebut"
-                 label="Heure de début"
-                disabled
-                >{{heuredebut}}
-                </v-text-field>
-            </v-col>
-            <v-col
-                cols="12"
-                sm="6"
             >
-            <v-text-field
-                v-model="heurefin"
-                label="Heure de fin"
-                disabled
-            >{{heurefin}}</v-text-field>
-        </v-col>
-        </v-row>
-    </v-card-subtitle>
-</v-card-actions>
-<v-card-subtitle>
-    <v-btn tile color="success" @click="confirmDate()">
-        <v-icon left>
-             mdi-pencil
-        </v-icon>
-            Enregistrer
-        </v-btn>
+        </v-calendar>
+        <v-menu
+          v-model="selectedOpen"
+          :close-on-content-click="false"
+          :activator="selectedElement"
+          offset-x
+            >
+            <v-card
+                color="grey lighten-4"
+                min-width="350px"
+                flat
+                >
+                <v-toolbar
+                    :color="selectedEvent.color"
+                    white
+                    >
+                     <!-- <v-btn color="error" @click="supprimerDate()">
+                    Supprimer
+                    </v-btn> -->
 
-          <v-btn tile color="success" @click="puush()">
-        <v-icon left>
-             mdi-pencil
-        </v-icon>
-            testpush
-        </v-btn>
+                    <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn icon>
+                        <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                </v-toolbar>
+                <v-card-text>
+                    <!-- <span>Formation du {{this.dateid}} -->
+                        <span> Horaires : {{this.typeEvent}}</span>
+                    <!-- <span> Début à {{this.typeEvent}} à {{this.events.date}}</span> -->
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn
+                        text
+                        color="secondary"
+                        @click="supprimerDate()"
 
-    <!-- <v-btn tile color="primary" @click="editDate()">
-     <v-icon left>
-        mdi-checkbox-marked-circle
-        </v-icon>
-            Modifier
-         </v-btn> -->
-    <!--
-    <v-btn tile color="error" @click="deleteDate()">
-        <v-icon left>
-            mdi-cancel
-        </v-icon>
-            Supprimer
-        </v-btn> -->
-        </v-card-subtitle>
-    </v-row>
+                     >
+                        Supprimer
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-menu>
+    </v-sheet>
+</v-col>
+
+
+<!-- //CHOIX DU CRENAU HORAIRE et du type de formation POUR LA FORMATION -->
+
+   <v-dialog v-model="dialog" scrollable max-width="300px">
+        <v-card>
+
+
+        <v-card-title>Type : </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 300px;">
+            <v-radio-group column  v-model="nameEvent" >
+                <v-radio label="Formation" value='Formation' ></v-radio>
+                <v-radio label="Réunion"   value='Réunion' ></v-radio>
+                <v-radio label="Examen" value='Examen'></v-radio>
+            </v-radio-group>
+
+        <v-card-title>Horaires : </v-card-title>
+        <v-card-text style="height: 300px;">
+            <v-radio-group column  v-model="typeEvent" >
+            <v-radio label="Matin" value='Matin'  @click="confirmDate()"></v-radio>
+            <v-radio label="Après-midi"   value='Après-midi' @click="confirmDate()"></v-radio>
+            <v-radio label="Journée entière" value='Journée entière' @click="confirmDate()"></v-radio>
+          </v-radio-group>
+
+        </v-card-text>
+
+
+
+        </v-card-text>
+
+
+
+
+
+
+
+        <v-divider></v-divider>
+        <v-card-actions>
+          <!-- <v-btn color="blue darken-1" text @click="dialog = false">Fermer</v-btn> -->
+          <!-- <v-btn color="blue darken-1" text @click="confirmDate()">Enregistrer</v-btn> -->
+        </v-card-actions>
+      </v-card>
+
+    </v-dialog>
+</v-row>
 </template>
+
+
 
 
 
@@ -308,42 +185,89 @@
 
 import DatesFormation from '../apis/Dates';
 import { mapState } from 'vuex';
+// import Supprimer from '../apis/Dates';
 
   export default {
     data: () => ({
-    start : '',
+
+    // start : '',
     timed : '',
+
     color : ['orange'],
     name : 'Formation',
-    value : "",
-    // dateformation : '',
-    // heuredebut: '',
-    // heurefin : '',
+    dateid : '',
+
     focus:'',
     type: 'month',
-     typeToLabel: {
+    typeToLabel: {
         month: 'Mois',
         week: 'Semaine',
         day: 'Jour',
     },
 
-    // infos : [],
-    // infosHours :[],
-
+    test: [],
     dialog: false,
     menu2: false,
     modal2: false,
     selectedOpen: false,
-    Alldates : []
+    dateId : '',
+    selectedEvent: {},
+    selectedElement: null,
+    selectedOpen: false,
+    loader: null,
+    plageHoraire : '',
+    // heurefin :'18:00',
 
-    }),
+    //   date: {
+    //         name: '',
+    //         start: '',
+    //         end: '',
+    //     },
+
+        typeEvent : '',
+        nameEvent: '',
+
+        dateformation : '',
+
+
+        //ALREADY DEFINIED
+        // start : ,
+        // end : ''
+
+}),
+
 
     mounted () {
       this.$refs.calendar.scrollToTime('08:00')
     },
 
-
     methods:{
+
+        //DELETE DATE A GARDER POUR SUPPRIMER UNE OU PLUSIEURS DATES SI NECESSAIRE UNIQUEMENT APRES LENVOI DU FORMULAIRE
+        // supprimerDate(){
+        //     Supprimer.delete()
+        //     .then(res =>{
+        //         console.log(this.reponse.data)
+        //     }).catch(error => console.log())
+        // },
+
+
+        showEvent ({ nativeEvent, event }) {
+        const open = () => {
+          this.selectedEvent = event
+          this.selectedElement = nativeEvent.target
+          requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
+        }
+
+        if (this.selectedOpen) {
+          this.selectedOpen = false
+          requestAnimationFrame(() => requestAnimationFrame(() => open()))
+        } else {
+          open()
+        }
+
+        nativeEvent.stopPropagation()
+      },
 
         //Settoday date du jour
         setToday() {
@@ -361,148 +285,208 @@ import { mapState } from 'vuex';
         this.$refs.calendar.next()
       },
 
-
        choosedDate(event){
-            this.selectedDate = event.date;
+            this.selectedDate = event;
             this.dialog = true;
             this.start = this.selectedDate;
             this.end = this.selectedDate;
-        },
+
+            // console.log(event.date)
+
+       },
 
 
-        chooseHours(){
-            this.timed = this.heuredebut;
-            this.timed2 = this.heurefin;
-            this.dialog = false;
-            this.value = this.value;
-            this.start = this.start +' '+this.timed;
-            this.end = this.end+' '+this.timed2;
-            console.log(this.start+' '+this.end)
+       //SUPPRIMER UN MARQUAGE D EVENEMENT SUR LE CALENDRIER
+         supprimerDate(events, value){
+            this.events.splice(this.events.indexOf(this.value))
+            this.selectedOpen = false;
+            console.log(this.events)
 
-            //print the event on the calendar
-            let events = {}
-            events.name = this.name,
-            events.start = this.start,
-            events.end = this.end,
-            events.value = this.value
+         },
 
-            this.$store.commit('UPDATE_EVENT', events)
 
-            events = {}
-        },
+
+
+        // AJOUTER LE OU LES EVENEMENTS DANS LE STORE
 
         confirmDate(){
-            let form = {
-                dateformation : this.dateformation,
-                heuredebut : this.heuredebut,
-                heurefin : this.heurefin,
+
+
+            let events = {}
+
+            events.name = this.name
+            events.dateid = this.events.start + this.events.end
+
+
+            //events.start = this.event
+            // events.end = this.end
+            // events.value = this.value
+
+
+            // this.dialog = false;
+            // this.start = this.start +' '+this.heuredebut;
+            // this.end = this.end+' '+this.heurefin;
+
+
+
+        //HORAIRES DE LA FORMATION EN FONCTION DU CRENAUX CHOISI
+
+            switch(this.typeEvent){
+
+                case 'Journée entière' :
+
+
+               events.start = this.dateformation+' '+'09:00',
+               events.end  = this.dateformation+' '+'18:00'
+
+                break;
+                case 'Après-midi' :
+
+
+                events.start = this.dateformation+' '+'14:00',
+                events.end  = this.dateformation+' '+'18:00'
+
+                break;
+                case 'Matin' :
+
+                events.start = this.dateformation+' '+'09:00',
+                events.end  = this.dateformation+' '+'14:00'
+
+                break;
+                default:
+
+                    alert('Aucun date séléctionnée pour cette formation')
+
+                //TODO:Traitement des err si default
+
             }
 
-            DatesFormation.add(form)
-            .then((res) => {
-let selection = []
-           console.log('planning envoyé')
-           selection.push(this.Alldates)
-           console.log(selection)
+             switch(this.nameEvent){
 
-           }).catch((error) => {
-               console.log('plannig not send')
-           })
+                case 'Formation' :
+
+                events.name = this.nameEvent
+
+                break;
+                case 'Réunion' :
+
+                events.name = this.nameEvent
+
+                break;
+                case 'Examen' :
+
+                events.name = this.nameEvent
+
+                break;
+                default:
+
+                    alert('Aucun date séléctionnée pour cette formation')
+
+                //TODO:Traitement des err si default
+
+            }
+
+                 events = this.$store.commit('UPDATE_EVENT', events);
+
+                // this.date.name.formation = this.$store.state.events
+                // this.date.start = this.$store.state.events.start
+                // this.date.end = this.$store.state.events.end
+                // this.$store.state.formation.datesSelected.push(this.events)
+
+
+                //FERMETURE DU SELECTEUR DE CRENAUX APRES AVOIT CLIQUé
+                this.dialog = false;
+
+                console.log('planning séléctionné')
+                console.log(this.events)
+                console.log(this.events.dateid)
+                // console.log(this.dateformation)
+                // console.log(this.typeEvent)
+
+
+                //DATES SELETED SAVED IN DDB
+                //DatesFormation.add(form)
+                //.then((response) => {
+                //this.dateId = response.data.id
+                //}).catch((error) => {
+                //console.log('plannig not send')
+                //})
         },
-
-        // showEvent(){
-        //     console.log('evenement affiché')
-        // },
-
-        showEvent() {
-            const open = () => {
-            this.selectedEvent = event
-            this.selectedElement = nativeEvent.target
-            setTimeout(() => this.selectedOpen = true, 10)
-        }
-
-        if (this.selectedOpen) {
-          this.selectedOpen = false
-          setTimeout(open, 10)
-        } else {
-          open()
-        }
-
-        nativeEvent.stopPropagation()
-      },
     },
+
+
 
     computed : {
 
-         ...mapState(['events', 'calendar']),
+         ...mapState(['events', 'calendar', 'formation']),
 
         //  dateformation(){
         //     return this.$store.commit('UPDATE_DATEFORMATION', data)
         // },
 
-         dateformation:{
-             get(){
-                 return this.$store.state.calendar.dateformation
-             },
-             set(data){
-                 this.$store.dispatch('UPDATE_DATEFORMATION',data)
-             }
-        },
-
-          heuredebut:{
-             get(){
-                 return this.$store.state.calendar.heuredebut
-             },
-             set(data){
-                 this.$store.dispatch('UPDATE_HEUREDEBUT',data)
-             }
-        },
-
-           heurefin:{
-             get(){
-                 return this.$store.state.calendar.heurefin
-             },
-             set(data){
-                 this.$store.dispatch('UPDATE_HEUREFIN',data)
-             }
-        },
-
-
-        // heuredebut(){
-        //     return this.$store.commit('UPDATE_HEUREDEBUT', data)
+        // dateformation:{
+        //     get(){
+        //          return this.$store.state.calendar.dateformation
+        //     },
+        //     set(data){
+        //          this.$store.dispatch('UPDATE_DATEFORMATION',data)
+        //     }
         // },
 
-        // heurefin(){
-        //     return this.$store.commit('UPDATE_HEUREFIN', data)
+        // heuredebut:{
+        //     get(){
+        //          return this.$store.state.calendar.heuredebut
+        //     },
+        //     set(data){
+        //          this.$store.dispatch('UPDATE_HEUREDEBUT',data)
+        //     }
         // },
 
-        //  events:{
-        //      get(){
-        //          return this.$store.state.events.events
-        //      },
-        //      set(data){
-        //          this.$store.dispatch('UPDATE_EVENT',data)
-        //      }
+        // heurefin:{
+        //     get(){
+        //          return this.$store.state.calendar.heurefin
+        //     },
+        //     set(data){
+        //          this.$store.dispatch('UPDATE_HEUREFIN',data)
+        //     }
+        // },dateformation:{
+        //     get(){
+        //          return this.$store.state.calendar.dateformation
+        //     },
+        //     set(data){
+        //          this.$store.dispatch('UPDATE_DATEFORMATION',data)
+        //     }
         // },
 
         // start:{
-        //      get(){
+        //     get(){
         //          return this.$store.state.events.start
-        //      },
-        //      set(data){
-        //          this.$store.dispatch('UPDATE_START',data)
-        //      }
+        //     },
+        //     set(data){
+        //          this.$store.dispatch('UPDATE_EVENTS',data)
+        //     }
         // },
 
         // end:{
-        //      get(){
-        //          return this.$store.state.events.end
-        //      },
-        //      set(data){
-        //          this.$store.dispatch('UPDATE__END',data)
-        //      }
+        //     get(){
+        //          return this.$store.state.events.fin
+        //     },
+        //     set(data){
+        //          this.$store.dispatch('UPDATE_EVENTS',data)
+        //     }
         // },
-    }
+    },
+
+      watch: {
+      loader () {
+        const l = this.loader
+        this[l] = !this[l]
+
+        setTimeout(() => (this[l] = false), 3000)
+
+        this.loader = null
+      },
+    },
   }
 
 </script>
@@ -530,5 +514,42 @@ let selection = []
     right: 4px;
     margin-right: 0px;
     }
+
+    .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 
 </style>

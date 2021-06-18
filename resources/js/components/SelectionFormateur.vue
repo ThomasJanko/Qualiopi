@@ -65,11 +65,11 @@ export default ({
     },
     mounted(){
 
-
-        User.listUserByRole(this.id) //List des Stagiaires
+ //Liste des Stagiaires
+        User.listUserByRole(this.id)
             .then(response =>{
-                console.log(response.data)
-            this.$store.state.formation.itemsFormateur = response.data.users
+                // console.log(response.data)
+                this.$store.state.formation.itemsFormateur = response.data.users
                 })
             .catch(error => console.log(error))
 

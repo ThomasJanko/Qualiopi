@@ -40,6 +40,7 @@ export default {
 // },
 
         mounted() {
+            //infos utilisateur si authentifié
             if(localStorage.getItem("auth")=="true"){
                 User.auth().then(response => {
                             this.$store.commit("INFO_USERS", response.data)

@@ -15,10 +15,11 @@ class CreateDatesTable extends Migration
     {
         Schema::create('dates', function (Blueprint $table) {
             $table->id();
-            $table->date('dateformation');
-            $table->string('heuredebut');
-            $table->string('heurefin');
-            $table->timestamps();
+            $table->string('name');
+            $table->string('dateid');
+            $table->string('start');
+            $table->string('end');
+            $table->unsignedBigInteger('formation_id');
         });
     }
 

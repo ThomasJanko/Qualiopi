@@ -35,5 +35,10 @@ export default{
         return Api.get('/formation/'+id+'/infos/')
     },
 
+    async updateState(form, id){
+        await Csrf.getCookie();
+         return Api.post('/updateState/'+id,form);
+    },
+
 
 }

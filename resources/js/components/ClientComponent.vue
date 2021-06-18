@@ -1,7 +1,7 @@
 <template>
 <v-container>
 
-
+<h1 class='titre pa-15 ml-15 mr-15 justify-center grey--text ' color='red' > Retrouvez l'ensemble de vos formations ! </h1>
 
   <v-card
     class="mx-auto "
@@ -33,8 +33,9 @@
         >
 
           <v-list-item-icon>
+            <v-icon>mdi-clipboard-list-outline</v-icon>
 
-  <div class="text-center" >
+  <!-- <div class="text-center" >
     <v-menu offset-y >
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon
@@ -43,7 +44,7 @@
           v-bind="attrs"
           v-on="on"
         >
-         <v-icon>mdi-dots-vertical</v-icon>
+         <v-icon>mdi-clipboard-list-outline</v-icon>
         </v-btn>
          </template>
          <v-list>
@@ -55,27 +56,21 @@
         </v-list-item>
       </v-list>
     </v-menu>
-  </div>
+  </div> -->
 
           </v-list-item-icon>
           <v-list-item-content>
 
-            <v-list-item-title  class="orange lighten-2 font-weight-bold" > {{item.name_formation}} </v-list-item-title>
-            <v-list-item >
+            <v-list-item-title  class="teal--text text--lighten-1 font-weight-bold text-uppercase" > {{item.name_formation}} </v-list-item-title>
+           <v-list-item >
                 <v-flex row class="">
-                    <v-flex class="location">{{item.location_formation}}</v-flex>
-                    <v-flex class="date">
-                        <td>
-                            <tr >
-                                <th>{{item.date_formation}}</th>
-                            </tr>
-                        </td>
-                    </v-flex>
-                    <v-flex class="state">{{item.state_formation}}</v-flex>
+                    <v-flex class="blue-grey--text text--lighten-2">{{item.location_formation}}</v-flex>
+                    <v-flex justify-center class="blue-grey--text text--lighten-2"> {{item.informations.contenu}} </v-flex>
+                    <v-flex justify-end class="state"><v-chip class="teal--text">{{item.state_formation}} </v-chip>  </v-flex>
                 </v-flex>
+
             </v-list-item>
-
-
+                <v-divider class="light-blue darken-1" inset></v-divider>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -93,6 +88,7 @@ export default {
 
 
       items: [],
+
       menus: [
           {title: 'Plan de Formation'}
       ]
@@ -102,21 +98,20 @@ export default {
 
 created(){
 
-
-         Formation.indexUserAuth() //List formation user authentifié
+//Formations de l'utilisateur authentifié
+         Formation.indexUserAuth()
         .then(response =>{
 
             this.items=response.data
-            console.log(this.items)
 
-            })
+        })
         .catch(error => console.log(error))
     },
 
 methods:{
 
 
-
+//Fonctions de tri
     sortDate(arr){
         this.items = this.SortDate(arr)
     },

@@ -56,6 +56,7 @@ data(){
 },
 
 methods: {
+    //
     supprimer(id){
         User.deactivate(id)
         .then((res) => {

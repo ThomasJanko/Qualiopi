@@ -14,8 +14,14 @@ import CreationClient from './components/CreationClient';
 import AccountComponent from './components/AccountComponent';
 import InfosFormation from './components/InfosFormation';
 import PlanFormation from './components/PlanFormation'
+import CreationPlan from './components/CreationPlan'
 import ListFormation from './components/ListFormation'
+import GestionListFormation from './components/GestionListFormation'
+import LigneFormation from './components/LigneFormation'
+// import Categories from './components/Categories'
 
+import SousCategories from './components/SousCategories'
+import Contenus from './components/Contenus'
 
 
 // Router :
@@ -77,9 +83,39 @@ const router = new routerVue ({
             component : PlanFormation,
         },
         {
+            name : 'CreationPlan',
+            path : '/create-plan/:id',
+            component : CreationPlan,
+        },
+        {
             name : 'listFormation',
             path : '/listformation/:id',
             component : ListFormation,
+        },
+        {
+            name : 'GestionListFormation',
+            path : '/gestionlistformation/',
+            component : GestionListFormation,
+        },
+        {
+            name : 'ligneFormation',
+            path : '/ligneformation/:id',
+            component : LigneFormation,
+        },
+        // {
+        //     name : 'categories',
+        //     path : '/categories',
+        //     component : Categories,
+        // },
+        {
+            name : 'souscategories',
+            path : '/souscategories',
+            component : SousCategories,
+        },
+        {
+            name : 'contenus',
+            path : '/contenus',
+            component : Contenus,
         },
 
 

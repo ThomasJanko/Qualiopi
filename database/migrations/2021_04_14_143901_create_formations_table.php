@@ -19,7 +19,6 @@ class CreateFormationsTable extends Migration
             $table->string('location_formation');
             $table->string('state_formation');
             $table->unsignedBigInteger('information_id');
-            $table->unsignedBigInteger('planformation_id');
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('date_id');

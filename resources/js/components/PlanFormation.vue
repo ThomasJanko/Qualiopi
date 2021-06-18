@@ -11,10 +11,13 @@
           Plan de Formation
         </div>
         <v-list-item-title class="headline mb-1 text-uppercase primary--text">
-          {{formation.name_formation}}
+          {{plan.name_formation}}
         </v-list-item-title>
-        <v-list-item-subtitle>Voici le Plan de formation de la formation {{infos.name_formation}} </v-list-item-subtitle>
-        <v-list-item-subtitle> Temps: <v-chip class="primary--text"> {{formation.time_formation}} heures</v-chip></v-list-item-subtitle>
+        <!-- <v-list-item-subtitle>Voici le Plan de formation de la formation {{infos.name_formation}} </v-list-item-subtitle> -->
+        <v-list-item-subtitle> Temps: <v-chip class="primary--text"> {{plan.time_formation}} heures</v-chip></v-list-item-subtitle>
+
+
+
       </v-list-item-content>
 
       <v-img class="pt-8"
@@ -31,7 +34,7 @@
         rounded
         text
         class="primary--text"
-        @click="ListFormation(formation.id)"
+        @click="ListFormation(planformation.id)"
 
       >
         Liste Formation
@@ -40,6 +43,7 @@
         outlined
         rounded
         text
+        @click="ligneFormation(plan.id)"
          class="primary--text"
       >
         Ligne Plan Formation
@@ -50,13 +54,21 @@
 
 <script>
 
-import Formation from '../apis/Formation'
+import Planformation from '../apis/Planformation'
+import { mapState } from 'vuex';
 export default {
 
 
+props: {
+    plan: {
+        type: Object,
+        default: null
+    },
+},
+
      data: () => ({
          infos : [],
-         formation: [],
+         planformation: [],
          lignedeformation: []
     }),
 
@@ -64,15 +76,17 @@ mounted(){
 
 
 
-     Formation.infosFormation(this.$route.params.id) //Infos de la formation sélectionnée
-            .then(response =>{
-                //console.log(response.data)
-                this.infos = response.data
-                this.formation = response.data.planformation
+// //Infos de la formation sélectionnée
+//     Planformation.PlanFormation(this.planid)
+//             .then(response =>{
+//                 //console.log(response.data)
+//                 this.infos = response.data
+//                 this.planformation = response.data.planformation
+//                 // console.log(response.data)
 
+//             })
 
-            })
-            .catch(error => console.log(error))
+//             .catch(error => console.log(error))
 
 
 
@@ -80,24 +94,33 @@ mounted(){
     },
 
     methods: {
+        //ferme le popup
          close(){
 
                 this.$emit('closeform')
         },
-
+//ListFormation
           ListFormation(id){
 
 
-            this.$router.push({ name : 'listFormation', params: { id: id} });
+            this.$router.push({ name: 'listFormation', params: { id: id} });
 
+        },
+        ligneFormation(id){
+             this.$router.push({ name: 'ligneFormation', params: { id: id} });
         }
-    }
+    },
 
 
 
 
 
+    computed : {
 
+         ...mapState(['formation']),
+
+
+}
 
 }
 
