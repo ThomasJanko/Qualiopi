@@ -15,13 +15,24 @@ export default{
 
     },
 
-    async delete(form){
+
+    //TODO: ?????
+    // async delete(form){
+    //     await Csrf.getCookie();
+    //     return Api.post('/update/formation',form);
+
+    // },
+
+    async delete(id){
         await Csrf.getCookie();
-        return Api.post('/update/formation',form);
+        return Api.get('/delete/formation/'+id);
 
     },
+
+
     async index()
     {
+        await Csrf.getCookie();
         return Api.get('/formations/')
     },
 

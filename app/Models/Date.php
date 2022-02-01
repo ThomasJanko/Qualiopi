@@ -9,7 +9,7 @@ class Date extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'dateid', 'start', 'end', 'formation_id'];
+    protected $fillable = ['name', 'dateid', 'start', 'end', 'location', 'formation_id'];
 
     public function formations()
 {

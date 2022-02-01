@@ -156,8 +156,8 @@ export default {
         return {
 
             form:{
-            email : '',
-            password: ''
+            email: '',
+            password: '',
 
             },
 

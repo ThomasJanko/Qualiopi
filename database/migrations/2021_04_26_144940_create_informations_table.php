@@ -16,6 +16,13 @@ class CreateInformationsTable extends Migration
         Schema::create('informations', function (Blueprint $table) {
             $table->id();
             $table->string('contenu');
+
+            // $table->foreign('information_id')
+            // ->references('id')->on('informations')
+            // ->onDelete('cascade');
+            // $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

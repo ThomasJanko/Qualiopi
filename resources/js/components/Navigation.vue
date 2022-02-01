@@ -1,60 +1,6 @@
 <template>
     <div>
 
- <!-- <v-navigation-drawer width="350" absolute mini-variant v-model="drawer" @click="drawer=!drawer" app class="blue-grey darken-1">
-        <v-list dark>
-          <div class="mx-auto text-center">
-
-              <v-avatar
-              size="60"
-                color="orange"
-              >
-              <v-icon size="36">mdi-account</v-icon>
-              </v-avatar>
-
-              <h3>{{user.name}}</h3>
-              <p class="caption mt-1">
-                {{user.email}}
-              </p>
-              <v-divider class="my-3"></v-divider>
-              <v-btn v-if="isLoggedIn"
-                depressed
-                rounded
-                text  @click.prevent='logout()'
-              >
-                Connexion
-              </v-btn>
-              <v-divider class="my-3"></v-divider>
-              <v-btn v-if="!isLoggedIn"
-                depressed
-                rounded
-                text  @click.prevent='logout()'
-              >
-                Changer de compte
-              </v-btn>
-              <v-divider class="my-3"></v-divider>
-              <v-btn v-if="!isLoggedIn"
-                depressed
-                rounded
-                text
-                @click.prevent='logout()'
-              >
-                Deconnection
-              </v-btn>
-            </div>
-            <br/>
-          <v-list-item class="font-weight-black" v-for="link in links" :key="link.text" router :to="link.route">
-            <v-list-item-action>
-              <v-icon>{{link.icon}}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-            <v-list-item-title>{{link.text}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-        </v-list>
-
-      </v-navigation-drawer> -->
 
         <v-app-bar fixed flat class="pb-8"
             color="white"

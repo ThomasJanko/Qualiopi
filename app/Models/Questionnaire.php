@@ -4,25 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-
 
 class Questionnaire extends Model
 {
+    use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $table = 'questionnaires';
 
-    public function contenuformations()
+    protected $fillable = ['listformation_id', 'question', 'choiceA', 'choiceB', 'choiceC', 'choiceD', 'response'];
+
+    public function planformation()
     {
-        return $this->belongsToMany(Contenuformation::class);
+        return $this->belongsTo(Planformation::class);
+    }
+
+    public function listformation()
+    {
+        return $this->belongsTo(Ligneplanformation::class);
+    }
+
+    public function ligneplanformations()
+    {
+        return $this->belongsToMany(Ligneplanformation::class, Listformation::class,'planformation_id','questionnaire_id');
     }
 
 
-    public function contenuquestionnaires()
-    {
-        return $this->belongsToMany(Contenuquestionnaire::class);
-    }
 
 }
-
-

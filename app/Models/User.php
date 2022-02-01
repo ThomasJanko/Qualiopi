@@ -46,5 +46,10 @@ class User extends Authenticatable
 
         return $this->belongsToMany(Formation::class); //->withPivot('formation');
     }
+
+    public function user()
+    {
+        return $this->hasOne(user::class);
+    }
 }
 

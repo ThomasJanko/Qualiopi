@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Questionnaire;
+use Illuminate\Database\Eloquent\Model;
 use League\CommonMark\Block\Element\Document;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
 
@@ -26,6 +27,11 @@ class Planformation extends Model
     public function ligneplanformations()
     {
         return $this->hasMany(Ligneplanformation::class);
+    }
+    public function questionnaires()
+    {
+        // return $this->hasManyThrough(Questionnaire::class, 'ligneplanformations','questionnaires_id', 'planformation_id');
+        return $this->belongsToMany(Questionnaire::class, Ligneplanformation::class,'planformation_id','questionnaire_id');
     }
 
 }

@@ -1,11 +1,7 @@
 <template>
-
-
     <v-container fluid>
-         <v-card max-width="1000" class="elevation-12  col-12" >
-      <v-row
-
-      >
+        <v-card  class="elevation-12  col-12" >
+        <v-row>
 
 
             <v-text-field class="col-8"
@@ -21,6 +17,9 @@
             </v-flex>
             <v-flex justify-end class="pr-8 pt-2">
              <v-btn class="success" @click="Send(); close()"> Valider</v-btn>
+            </v-flex>
+            <v-flex justify-end class="pr-8 pt-2">
+             <v-btn class="success small" @click="Desreoy(); close()"> Annuler</v-btn>
             </v-flex>
 
 
@@ -221,11 +220,11 @@ SortName: function(arr) {//filtre desc
 //Ajouter une catégorie
       addCategorie () {
 
-           ListFormations.addCategorie(this.form)
-                        .then(response => {
-                       this.cats = response.data;
-                       this.form.categorie=''
-                        })
+        ListFormations.addCategorie(this.form)
+            .then(response => {
+            this.cats = response.data;
+            this.form.categorie = ''
+         })
 
 
         console.log('Catégorie Ajoutée')

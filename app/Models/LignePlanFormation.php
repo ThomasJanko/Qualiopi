@@ -10,7 +10,7 @@ class Ligneplanformation extends Model
 {
     // protected $table = 'ligneformations';
     // protected $appends = ['planformation_id'];
-    protected $fillable = ['planformation_id','Categorie', 'SousCategorie', 'Contenu'];
+    protected $fillable = ['planformation_id','Categorie', 'SousCategorie', 'Contenu', 'questionnaire_id', 'listformation_id'];
 
 
     public function planformation()
@@ -18,14 +18,21 @@ class Ligneplanformation extends Model
         return $this->belongsTo(Planformation::class, 'ligneformation_id');
     }
 
-    // public function contenuformations()
-    // {
-    //     return $this->belongsToMany(Contenuformation::class);
-    // }
-
-    public function listformations()
+    public function listformation()
     {
-        return $this->belongsToMany(ListFormation::class);
+        return $this->belongsTo(ListFormation::class, 'listformation_id');
+
     }
+
+    public function questionnaire()
+    {
+        //return $this->belongsTo(Questionnaire::class, 'questionnaire_id');
+
+        return $this->hasManyThrough(Questionnaire::class, Ligneplanformation::class, 'listformation_id','id','id','questionnaire_id');
+
+    }
+
+
+
 
 }

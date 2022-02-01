@@ -43,5 +43,15 @@ class Listformation extends Model
 
     }
 
+    public function questionnaire()
+    {
+
+        return $this->hasOne(Questionnaire::class)->withDefault([
+            'id' => 0
+
+        ]);
+
+    }
+
 
 }

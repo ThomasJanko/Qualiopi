@@ -14,7 +14,7 @@ export default{
     async indexall()
     {
         await Csrf.getCookie();
-        return Api.get('/listcategorie/categories/all');
+        return Api.get('/listcategorie/categoriesall');
     },
 
     async add(form){

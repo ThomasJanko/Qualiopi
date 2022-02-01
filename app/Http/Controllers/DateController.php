@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Date;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DateController extends Controller
 {
@@ -10,33 +11,32 @@ class DateController extends Controller
     //Ajouter une date pour la formation
     public function add(Request $request){
 
-        $request->validate([
+        // array of array To array of object (+ foreach)
+        $validator = Validator::make($request->all(), [
 
-            'name' => ['required'],
-            'dateid' => ['required'],
-            'start' => ['required'],
-            'end' => ['required'],
-            'formation_id' => ['required'],
+            'newdates.*.name' => ['required'],
+            'newdates.*.dateid' => ['required'],
+            'newdates.*.start'=> ['required'],
+            'newdates.*.end'=> ['required'],
+            'newdates.*.location'=> ['required'],
+            'formation_id'=> ['required'],
+
 
         ]);
 
-        //CREATION D UNE DATE
+        foreach ($request->newdates as $ligne) {
+            $ligne['formation_id'] = $request->formation_id;
+            $date = new Date($ligne);
 
-        $date = new Date([
+            $date->save();
 
-            'name'=>$request->name,
-            'dateid'=>$request->name->start->end->formation_id, //DATE ID CORRESPOND AU GROUPEMENT DES AUTRES COLONNES
-            'start'=>$request->start,
-            'end'=>$request->end,
-            'formation_id'=>$request->formation
-
-        ]);
-
-        $date->save();
+        }
+    }
 
 
 
-     }
+
+
 
     //Récuperer une date
     public function index(Request $Request)
@@ -54,10 +54,11 @@ class DateController extends Controller
         $this->validate($request, [
 
 
-            'name'=>'required',
-            'dateid'=>'required',
-            'start'=>'required',
-            'end'=>'required',
+            'name'=>['required'],
+            'dateid'=>['required'],
+            'start'=>['required'],
+            'end'=>['required'],
+            'location'=>['required'],
             'formation_id'=>['required']
 
         ]);
@@ -87,7 +88,8 @@ class DateController extends Controller
       $res = Date::findOrFail($id);
       $res->delete();
 
-      return response()->json($res,200);
+
+      return response()->json($res, 200);
 
     }
 
@@ -97,6 +99,26 @@ class DateController extends Controller
     public function infoDates(Date $id)
     {
         $formations = Date::with('dates')->get();
+    }
+
+
+    //MODIFICATION DE L'EVENT PAR LE FORMATEUR AVANT LA VALIDATION
+    public function updateEvent(Request $request, Date $id){
+
+        $request->validate([
+            'name'=>['required'],
+            'start'=>['required'],
+            'end'=>['required'],
+            'location'=>['required'],
+
+        ]);
+
+        $id->name =  $request->name;
+        $id->start =  $request->start;
+        $id->end =  $request->end;
+        $id->location =  $request->location;
+        $id->save();
+
     }
 
 }

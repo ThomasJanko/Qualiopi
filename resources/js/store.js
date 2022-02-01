@@ -44,10 +44,14 @@ export default new Vuex.Store({
             SousCategories: [],
             Contenus: [],
             plan: {},
+            quizz: [],
+            repquizz: [],
+
         },
 
 
-        events: []
+        events: [],
+        eventNew :[]
 
 
 
@@ -66,6 +70,7 @@ export default new Vuex.Store({
         // time_formation :'',
         // formation_id :'',
         // user_id :'',
+
 
     },
 
@@ -186,6 +191,11 @@ export default new Vuex.Store({
 
         UPDATE_EVENT(state, data){
             state.events.push(data);
+            state.eventNew.push(data);
+        },
+        RESET_EVENT(state){
+            state.events= [];
+            state.eventNew= [];
         },
 
         // UPDATE_DATES(state, data){
@@ -214,6 +224,16 @@ export default new Vuex.Store({
         UPDATE_DATESFORMATIONID(state, data){
             state.dateid = data
         },
+
+        UPDATE_QUIZZ(state, data){
+            state.formation.quizz = data
+        },
+
+        UPDATE_REP_QUIZZ(state, data){
+            state.formation.repquizz = data
+        },
+
+
 
 
 
@@ -322,6 +342,17 @@ export default new Vuex.Store({
         UPDATE_DATESFORMATIONID({commit},data){
             commit('UPDATE_DATESFORMATIONID',data )
         },
+
+        UPDATE_QUIZZ({commit},data){
+            commit('UPDATE_QUIZZ',data )
+        },
+
+        UPDATE_REP_QUIZZ({commit},data){
+            commit('UPDATE_REP_QUIZZ',data )
+        },
+
+
+
 
 
 

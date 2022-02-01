@@ -113,6 +113,7 @@
                 <v-card-text>
                     <!-- <span>Formation du {{this.dateid}} -->
                         <span> Horaires : {{this.typeEvent}}</span>
+                        <span> Lieu : {{this.locationEvent}}</span>
                     <!-- <span> Début à {{this.typeEvent}} à {{this.events.date}}</span> -->
                 </v-card-text>
                 <v-card-actions>
@@ -137,32 +138,35 @@
         <v-card>
 
 
-        <v-card-title>Type : </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text style="height: 300px;">
-            <v-radio-group column  v-model="nameEvent" >
-                <v-radio label="Formation" value='Formation' ></v-radio>
-                <v-radio label="Réunion"   value='Réunion' ></v-radio>
-                <v-radio label="Examen" value='Examen'></v-radio>
-            </v-radio-group>
+        <!-- Séléction du type de formation -->
+        <v-card-title>Évenement : </v-card-title>
+            <v-card-text style="height: 250px;">
+                <v-radio-group column  v-model="nameEvent" >
+                    <v-radio label="Formation" value='Formation' ></v-radio>
+                    <v-radio label="Réunion"   value='Réunion' ></v-radio>
+                    <v-radio label="Examen" value='Examen'></v-radio>
+                </v-radio-group>
 
-        <v-card-title>Horaires : </v-card-title>
-        <v-card-text style="height: 300px;">
-            <v-radio-group column  v-model="typeEvent" >
-            <v-radio label="Matin" value='Matin'  @click="confirmDate()"></v-radio>
-            <v-radio label="Après-midi"   value='Après-midi' @click="confirmDate()"></v-radio>
-            <v-radio label="Journée entière" value='Journée entière' @click="confirmDate()"></v-radio>
-          </v-radio-group>
-
-        </v-card-text>
+                <!-- Séléction du type de formation -->
+                <v-card-title>Lieu : </v-card-title>
+                    <v-card-text style="height: 250px;">
+                        <v-radio-group column  v-model="locationEvent" >
+                            <v-radio label="Présentiel" value='Présentiel'></v-radio>
+                            <v-radio label="Distanciel"   value='Distanciel'></v-radio>
+                        </v-radio-group>
 
 
-
-        </v-card-text>
-
-
-
-
+                <!-- Séléction du type de formation -->
+                <v-card-title>Horaires : </v-card-title>
+                    <v-card-text style="height: 205px;">
+                        <v-radio-group column  v-model="typeEvent" >
+                            <v-radio label="Matin" value='Matin'  @click="confirmDate()"></v-radio>
+                            <v-radio label="Après-midi"   value='Après-midi' @click="confirmDate()"></v-radio>
+                            <v-radio label="Journée entière" value='Journée entière' @click="confirmDate()"></v-radio>
+                        </v-radio-group>
+                         </v-card-text>
+                    </v-card-text>
+            </v-card-text>
 
 
 
@@ -216,23 +220,16 @@ import { mapState } from 'vuex';
     selectedOpen: false,
     loader: null,
     plageHoraire : '',
-    // heurefin :'18:00',
 
-    //   date: {
-    //         name: '',
-    //         start: '',
-    //         end: '',
-    //     },
 
         typeEvent : '',
         nameEvent: '',
+        locationEvent : '',
 
         dateformation : '',
 
 
-        //ALREADY DEFINIED
-        // start : ,
-        // end : ''
+
 
 }),
 
@@ -290,6 +287,7 @@ import { mapState } from 'vuex';
             this.dialog = true;
             this.start = this.selectedDate;
             this.end = this.selectedDate;
+            this.dateid = '';
 
             // console.log(event.date)
 
@@ -314,8 +312,10 @@ import { mapState } from 'vuex';
 
             let events = {}
 
-            events.name = this.name
-            events.dateid = this.events.start + this.events.end
+            events.name = this.name;
+            events.location = this.location;
+
+
 
 
             //events.start = this.event
@@ -339,6 +339,7 @@ import { mapState } from 'vuex';
                events.start = this.dateformation+' '+'09:00',
                events.end  = this.dateformation+' '+'18:00'
 
+
                 break;
                 case 'Après-midi' :
 
@@ -346,16 +347,19 @@ import { mapState } from 'vuex';
                 events.start = this.dateformation+' '+'14:00',
                 events.end  = this.dateformation+' '+'18:00'
 
+
                 break;
                 case 'Matin' :
 
                 events.start = this.dateformation+' '+'09:00',
                 events.end  = this.dateformation+' '+'14:00'
 
+
+
                 break;
                 default:
 
-                    alert('Aucun date séléctionnée pour cette formation')
+                    alert('Aucune date séléctionnée pour cette formation')
 
                 //TODO:Traitement des err si default
 
@@ -367,25 +371,52 @@ import { mapState } from 'vuex';
 
                 events.name = this.nameEvent
 
+
                 break;
                 case 'Réunion' :
 
                 events.name = this.nameEvent
+
 
                 break;
                 case 'Examen' :
 
                 events.name = this.nameEvent
 
+
+
                 break;
                 default:
 
-                    alert('Aucun date séléctionnée pour cette formation')
+                    alert('Aucun type de formation séléctionné pour cette formation')
 
                 //TODO:Traitement des err si default
 
             }
 
+             switch(this.locationEvent){
+
+                case 'Présentiel' :
+
+                events.location = this.locationEvent
+
+
+                break;
+                case 'Distanciel' :
+
+                events.location = this.locationEvent
+
+
+                break;
+                default:
+
+                    alert('Aucun type de formation séléctionné pour cette formation')
+
+                //TODO:Traitement des err si default
+
+            }
+
+                events.dateid = events.name +' - '+ events.start +' - ' + events.end
                  events = this.$store.commit('UPDATE_EVENT', events);
 
                 // this.date.name.formation = this.$store.state.events
@@ -399,7 +430,9 @@ import { mapState } from 'vuex';
 
                 console.log('planning séléctionné')
                 console.log(this.events)
-                console.log(this.events.dateid)
+
+                this.events = '';
+
                 // console.log(this.dateformation)
                 // console.log(this.typeEvent)
 
@@ -420,43 +453,7 @@ import { mapState } from 'vuex';
 
          ...mapState(['events', 'calendar', 'formation']),
 
-        //  dateformation(){
-        //     return this.$store.commit('UPDATE_DATEFORMATION', data)
-        // },
 
-        // dateformation:{
-        //     get(){
-        //          return this.$store.state.calendar.dateformation
-        //     },
-        //     set(data){
-        //          this.$store.dispatch('UPDATE_DATEFORMATION',data)
-        //     }
-        // },
-
-        // heuredebut:{
-        //     get(){
-        //          return this.$store.state.calendar.heuredebut
-        //     },
-        //     set(data){
-        //          this.$store.dispatch('UPDATE_HEUREDEBUT',data)
-        //     }
-        // },
-
-        // heurefin:{
-        //     get(){
-        //          return this.$store.state.calendar.heurefin
-        //     },
-        //     set(data){
-        //          this.$store.dispatch('UPDATE_HEUREFIN',data)
-        //     }
-        // },dateformation:{
-        //     get(){
-        //          return this.$store.state.calendar.dateformation
-        //     },
-        //     set(data){
-        //          this.$store.dispatch('UPDATE_DATEFORMATION',data)
-        //     }
-        // },
 
         // start:{
         //     get(){

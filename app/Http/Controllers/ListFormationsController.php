@@ -47,43 +47,13 @@ class ListFormationsController extends Controller
     public function delete(int $id)
     {
 
-//         $del=Listformation::find($id);
 
-//    if($del)
-//    {
-//    // return $user;           <------------------------user exist
-//        if($del->delete()){
-//          return 'user deleted';
-//          }
-//     else{
-//        return "something wrong";
-//         }
-
-//    }
-//   else{
-//      return "list not exist";// <--------------------user not exist
-//     }
       $res = Listformation::findOrFail($id);
       $res->delete();
 
       return response()->json($res,200);
 
-        // dd($res);
-        // if ($res) {
-        //     return response()->json([
-        //         'status' => 1,
-        //         'msg' => 'success'
-        //     ]);
-        // } else {
-        //     return response()->json([
-        //         'status' => 0,
-        //         'msg' => 'fail'
-        //     ]);
-        // }
 
-
-    //    $res= Listformation::where('id', $id)->delete();
-    //    return $res;
 
     }
 

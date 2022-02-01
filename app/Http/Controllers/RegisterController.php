@@ -23,14 +23,20 @@ class RegisterController extends Controller
             'surname' => ['required'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'min:4', 'confirmed'],
-            'password_confirmation' => ['required']
+            'password_confirmation' => ['required'],
+            'client_id' => ['required'],
+            'role_id' => ['required'],
+
         ]);
 
         User::create([
             'name' => $request->name,
             'surname' => $request->surname,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'client_id' => $request->client_id,
+            'role_id' => $request->role_id,
+
         ]);
     }
 

@@ -18,6 +18,7 @@ import CreationPlan from './components/CreationPlan'
 import ListFormation from './components/ListFormation'
 import GestionListFormation from './components/GestionListFormation'
 import LigneFormation from './components/LigneFormation'
+import quizzFormation from './components/quizzFormation'
 // import Categories from './components/Categories'
 
 import SousCategories from './components/SousCategories'
@@ -116,6 +117,11 @@ const router = new routerVue ({
             name : 'contenus',
             path : '/contenus',
             component : Contenus,
+        },
+        {
+            name : 'quizzFormation',
+            path : '/quizz/:id',
+            component : quizzFormation,
         },
 
 

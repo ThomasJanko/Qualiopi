@@ -39,6 +39,9 @@
 
             <v-list-item-title>  {{list.categories.title}} | {{list.souscategories.title}} | {{list.contenu}} </v-list-item-title>
             <v-list-item-icon>
+                <v-hover v-slot:default="{ hover }">
+                  <v-icon :color="hover ? 'success' : 'secondary'"  @click="addQuizz(list.id)" > mdi-plus</v-icon>
+            </v-hover>
              <v-hover v-slot:default="{ hover }">
                   <v-icon :color="hover ? 'red' : 'secondary'" @click="RemovePop(list.id)"> mdi-delete</v-icon>
             </v-hover>
@@ -76,6 +79,49 @@
             @click="dialog = false; remove()"
           >
             Accepter
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+
+        </v-dialog>
+
+        <!-- ------------------------------------------->
+         <v-dialog
+        v-model="dialog2"
+            width="500">
+
+        <v-card>
+        <v-card-title class="success white--text" >
+          Ajout du Questionnaire
+        </v-card-title>
+
+        <v-card-text>
+            <v-text-field v-model="qcm.question" label="question"></v-text-field>
+            <v-text-field v-model="qcm.choiceA" label="choixA"></v-text-field>
+            <v-text-field v-model="qcm.choiceB" label="choiceB"></v-text-field>
+            <v-text-field v-model="qcm.choiceC" label="choiceC"></v-text-field>
+            <v-text-field v-model="qcm.choiceD" label="choixD"></v-text-field>
+            <v-text-field v-model="qcm.response" label="reponse"></v-text-field>
+
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+            <v-btn
+            color="primary"
+            text
+            @click="dialog2 = false"
+          >
+            Annuler
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="dialog2 = false; add()"
+          >
+            Envoyer
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -154,6 +200,7 @@
 
 <script>
 import ListFormations from '../apis/ListFormations'
+import Questionnaire from '../apis/Questionnaire'
 
 export default {
 
@@ -171,8 +218,20 @@ props: {
       cat: false,
       souscat: false,
       cont: false,
-      dialog : false,
+      dialog: false,
+      dialog2: false,
       idd: '',
+
+      qcm: {
+          question:'',
+          choiceA:'',
+          choiceB:'',
+          choiceC:'',
+          choiceD:'',
+          response: '',
+
+
+      }
 
 
     }),
@@ -181,9 +240,8 @@ mounted(){
 
     ListFormations.index()
    .then(response =>{
+
                this.lists = response.data;
-
-
             })
             .catch(error => console.log(error))
 
@@ -203,6 +261,34 @@ mounted(){
              ListFormations.delete(this.idd)
             .then(response =>{
                console.log('suppression effectuée')
+
+               ListFormations.index()
+                .then(response =>{
+               this.lists = response.data;
+
+
+                })
+                .catch(error => console.log(error))
+
+
+            })
+            .catch(error => console.log(error))
+
+        },
+        addQuizz(id){
+            this.dialog2 = true
+            this.idd = id
+
+        },
+
+        add(){
+
+            let qcm = {...this.qcm}
+            qcm.listformation_id = this.idd;
+
+             Questionnaire.add(qcm)
+            .then(response =>{
+               console.log('quizz ajouté')
 
                ListFormations.index()
                 .then(response =>{

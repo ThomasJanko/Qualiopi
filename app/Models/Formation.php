@@ -6,14 +6,19 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use League\CommonMark\Block\Element\Document;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Formation extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'formations';
 
-    protected $fillable = ['name_formation','location_formation','state_formation','user_id','client_id','information_id'];
+
+
+    protected $fillable = ['name_formation','state_formation','user_id','client_id','information_id'];
+
+    public $timestamps = false;
 
 
 
@@ -37,7 +42,7 @@ class Formation extends Model
 
     public function informations()
     {
-        return $this->belongsTo(Information::class,'information_id');
+        return $this->belongsTo(Information::class, 'information_id');
     }
 
 
@@ -45,6 +50,15 @@ class Formation extends Model
     {
         return $this->hasMany(Date::class, 'formation_id');
     }
+
+    public function questionnaireformation()
+    {
+        return $this->hasMany(Questionnaireformation::class);
+    }
+
+
+
+
 
 
 

@@ -61,7 +61,7 @@
             <v-form class="px-3 pt-2" ref="form">
                 <v-text-field label="Titre de la formation*" v-model="form.name_formation" prepend-icon=" mdi-format-text-variant-outline" ></v-text-field>
                     <v-textarea label="Information" v-model="form.contenu" prepend-icon="mdi-pencil" ></v-textarea>
-                        <v-autocomplete
+                        <!-- <v-autocomplete
                         v-model="form.location_formation"
                             :items="lieu"
                             dense
@@ -70,7 +70,7 @@
                             label="Lieu de la formation*"
                             prepend-icon=" mdi-format-text-variant-outline"
                             >
-                        </v-autocomplete>
+                        </v-autocomplete> -->
                         <v-menu
                             ref="menu"
                             v-model="menu"
@@ -82,12 +82,12 @@
                         >
 
     </v-menu>
-     <v-text-field label="Date de la formation : "  prepend-icon="mdi-alarm" disabled></v-text-field>
+     <!-- <v-text-field label="Date de la formation : "  prepend-icon="mdi-alarm" disabled></v-text-field> -->
     <selection-calendar></selection-calendar>
     <v-spacer></v-spacer>
                         <v-dialog
                                 v-model="listform"
-                                width="600"
+
                                 >
 
 
@@ -169,28 +169,21 @@ export default {
             listUserFormation: [],
             // datesFormation: [],
 
-
-
-
             },
 
             plan: {
-                name_formation: '',
-                time_formation: '',
-                formation_id: '',
-                user_id: '',
 
-                contenuFormation: [],
+            name_formation: '',
+            time_formation: '',
+            formation_id: '',
+            user_id: '',
+            contenuFormation: [],
 
             },
 
-
-
             popup: false,
-
             menu: false,
-            lieu: ['Présentiel', 'Distanciel'],
-
+            // lieu: ['Présentiel', 'Distanciel'],
 
             date : '',
             value: null,
@@ -262,7 +255,6 @@ export default {
 
                 this.form ={
                     name_formation : '',
-                    location_formation: '',
                     state_formation : 'En attente',
                     contenu: '',
                     listStagiaire: [],
@@ -271,17 +263,15 @@ export default {
                     listUserFormation: [],
                     dateFormation: [],
                     formation_id: '',
-
-
-
                  }
+
                  this.formationid=response.data.id
 
             this.$store.state.formation.selectedClient = ''
             this.$store.state.formation.selectedUser = ''
             this.$store.state.formation.selectedFormateur = ''
-            this.$store.state.events= '',
-
+            this.$store.state.events = '',
+            this.$store.commit('RESET_EVENT');
 
             this.message= "Formulaire envoyé";
             this.error=false;
@@ -308,9 +298,6 @@ export default {
                   .catch(error => console.log(error))
 
 
-
-
-
             }).catch(error => {
 
                 this.message = "Echec de l'envoie du formulaire";
@@ -318,24 +305,19 @@ export default {
 
             })
 
-
                 // let datee = {... this.datee}
                 // datee.formation_id = this.formationid;
                 // datee.dateid = 'test';
                 // datee.dateFormation = this.$store.state.events
                 // console.log('cest bon')
                 // Dates.add(datee)
-                //         .then(response => {
+                // .then(response => {
 
                 //     console.log('dates planning envoyé')
                 // }).catch(error => {console.log('echec')})
 
-
-
-
-
-
         },
+
 
 
     }

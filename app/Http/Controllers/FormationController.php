@@ -9,6 +9,7 @@ use App\Models\Date;
 use App\Models\Planformation;
 use Illuminate\Http\Request;
 
+
 use Illuminate\Support\Facades\Auth;
 
 class FormationController extends Controller
@@ -18,7 +19,7 @@ class FormationController extends Controller
         $request->validate([
             'name_formation' => ['required'],
             'row.*.dateformation' => ['required'],
-            'location_formation' => ['required'],
+            // 'location_formation' => ['required'],
             // 'state_formation' => ['required'],
             'information_id' => ['required'],
             'client_id' => ['required'],
@@ -40,7 +41,7 @@ class FormationController extends Controller
         $formation = new Formation([
 
             'name_formation' =>$request->name_formation,
-            'location_formation'=>$request->location_formation,
+            // 'location_formation'=>$request->location_formation,
             'state_formation'=>$request->state_formation,
             'information_id'=>$information->id,
             'client_id'=>$request->client_id,
@@ -70,11 +71,12 @@ class FormationController extends Controller
         return response()->json($formation);
     }
 
-    public function index()
+    public function index(Request $Request)
         {
             $formations = Formation::all();
             return response()->json($formations);
         }
+
 
     public function indexUserAuth()
         {
@@ -84,16 +86,8 @@ class FormationController extends Controller
              foreach($formations as $formation){
                 $formation->informations;
              };
-
-
              return response()->json($formations->toArray());
-
-
-
         }
-
-
-
         public function infosFormation(Formation $id) //Récupération des infos d'une formation
     {
         $id->users;
@@ -138,6 +132,18 @@ class FormationController extends Controller
         $id->save();
 
     }
+
+    public function delete(Formation $id)
+    {
+
+
+      $id->delete();
+
+
+      return response()->json('supprimé', 200);
+
+    }
+
 
 
 

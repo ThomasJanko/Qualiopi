@@ -12,12 +12,18 @@ export default{
 
     async PlanFormation(id){
         await Csrf.getCookie();
-        return Api.get('/formation/'+id+'/plan/')
+        return Api.get('/formation/'+id+'/plan')
     },
 
     async infosPlanformation()
     {
         return Api.get('/planformation/')
+    },
+
+    async questionnaire(id){
+        await Csrf.getCookie();
+        return Api.get('/planformation/questionnaire'+id);
+
     },
 
 }

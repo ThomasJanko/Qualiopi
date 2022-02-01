@@ -195,16 +195,16 @@ export default {
         //enregistre un nouvel utilisateur
         enregistrer(){
 
-            let form ={...this.form}
-            form.client_id = this.formation.selectedClient.id // ajout de l'id du client
+
+            this.form.client_id = this.formation.selectedClient.id // ajout de l'id du client
 
         if(this.roleId ==='Admin'){
-            form.role_id = '1';
+            this.form.role_id = '1';
         }else if(this.roleId ==='Formateur'){
-             form.role_id = '2'
+             this.form.role_id = '2'
         }else if(this.roleId ==='Client'){
-             form.role_id = '3'}
-        else {form.role_id = '4'};
+             this.form.role_id = '3'}
+        else {this.form.role_id = '4'};
          // ajout de l'id du role
 
 //puis POST

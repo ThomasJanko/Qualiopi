@@ -19,6 +19,7 @@ class CreateDatesTable extends Migration
             $table->string('dateid');
             $table->string('start');
             $table->string('end');
+            $table->string('location');
             $table->unsignedBigInteger('formation_id');
         });
     }

@@ -122,6 +122,7 @@ export default {
         return {
 
         form : {
+
         social_reason : '',
         email: '',
         address : '',

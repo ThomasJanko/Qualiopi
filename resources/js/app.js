@@ -44,6 +44,9 @@ Vue.component('Contenus', require('./components/Contenus.vue').default);
 Vue.component('CreationCategorie', require('./components/CreationCategorie.vue').default);
 Vue.component('CreationSousCategorie', require('./components/CreationSousCategorie.vue').default);
 Vue.component('CreationContenu', require('./components/CreationContenu.vue').default);
+Vue.component('quizzFormation', require('./components/quizzFormation.vue').default);
+Vue.component('ItemsQuizz', require('./components/ItemsQuizz.vue').default);
+Vue.component('PresenceFormation', require('./components/PresenceFormation.vue').default);
 Vue.component('v-digital-time-picker', VDigitalTimePicker)
 
 

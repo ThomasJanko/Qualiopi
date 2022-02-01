@@ -15,7 +15,7 @@ class CreateListformationsTable extends Migration
     {
         Schema::create('listformations', function (Blueprint $table) {
             $table->id();
-            $table->string('categorie');
+            $table->bigInteger('categorie_id');
             $table->bigInteger('souscategorie_id');
             $table->string('contenu');
             $table->timestamps();

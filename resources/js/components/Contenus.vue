@@ -3,7 +3,7 @@
 <v-row class="">
     <v-col>
 
-        <v-list-item  @click="select = !select, IsSelected( select, categorietitle, souscategorietitle, contenu)" class="font-italic pl-2"> <v-icon :color="color" >mdi-menu-right</v-icon>{{contenu}}</v-list-item>
+        <v-list-item  @click="select = !select, IsSelected( select, categorietitle, souscategorietitle, contenu, contenuid)" class="font-italic pl-2"> <v-icon :color="color" >mdi-menu-right</v-icon>{{contenu}}</v-list-item>
 
 
     </v-col>
@@ -53,6 +53,7 @@ props: {
             Categorie: '',
             SousCategorie: '',
             Contenu: '',
+            listformation_id: '',
         },
         titre: '',
 
@@ -68,12 +69,14 @@ props: {
 
 
 
-        IsSelected(select,categorie, souscategorie, contenu){
+        IsSelected(select,categorie, souscategorie, contenu, contenuid){
 
 
             this.list.Categorie = categorie
             this.list.SousCategorie = souscategorie
             this.list.Contenu = contenu
+            this.list.listformation_id = contenuid
+
              if (select ==true){
 
                 this.$store.state.formation.selectedContenus.push(this.list)

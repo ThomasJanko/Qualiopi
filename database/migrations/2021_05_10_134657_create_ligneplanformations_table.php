@@ -19,6 +19,8 @@ class CreateLigneplanformationsTable extends Migration
             $table->String('Categorie');
             $table->String('SousCategorie');
             $table->String('Contenu');
+            $table->unsignedBigInteger('questionnaire_id');
+            $table->unsignedBigInteger('listformation_id');
 
             $table->timestamps();
         });

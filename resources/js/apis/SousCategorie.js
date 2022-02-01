@@ -26,6 +26,12 @@ export default{
     },
 
 
+    async indexall()
+    {
+        await Csrf.getCookie();
+        return Api.get('/listsouscategorie/souscategoriesall');
+    },
+
     async index()
     {
         await Csrf.getCookie();

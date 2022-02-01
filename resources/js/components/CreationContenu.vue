@@ -105,7 +105,7 @@ export default {
 
 
         //List Souscategories
-        SousCategorie.index()
+        SousCategorie.indexall()
                 .then(response =>{
                     this.souscats = response.data;
                     // this.$store.state.formation.SousCategories = this.souscats

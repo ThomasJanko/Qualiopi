@@ -10,6 +10,12 @@ export default{
 
     },
 
+    async update(form){
+        await Csrf.getCookie();
+        return Api.post('update/ligneformation',form);
+
+    },
+
     async index(){
         await Csrf.getCookie();
         return Api.get('index/ligneformation');
